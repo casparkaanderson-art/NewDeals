@@ -148,12 +148,16 @@ textarea.form-input{resize:vertical;line-height:1.5;}
 .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:15px;}
 .pcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all .28s;cursor:pointer;position:relative;}
 .pcard:hover{transform:translateY(-5px);border-color:rgba(230,57,70,.3);box-shadow:0 16px 40px rgba(0,0,0,.5);}
-.pcard-badge{position:absolute;top:10px;left:10px;background:var(--accent);color:#fff;font-size:10px;font-weight:800;padding:3px 9px;border-radius:50px;text-transform:uppercase;letter-spacing:.5px;z-index:1;}
+.pcard-badge{position:absolute;bottom:10px;left:10px;background:var(--accent);color:#fff;font-size:10px;font-weight:800;padding:3px 9px;border-radius:50px;text-transform:uppercase;letter-spacing:.5px;z-index:1;}
 .pcard-badge.pro-b{background:linear-gradient(135deg,#f6d365,#fda085);color:#1a1a1a;left:auto;right:10px;}
-.pcard-wish{position:absolute;top:10px;right:10px;background:rgba(7,7,13,.72);border:none;font-size:15px;width:30px;height:30px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;backdrop-filter:blur(6px);z-index:1;}
-.pcard-wish:hover{transform:scale(1.2);}
-.pcard-wish.saved{background:rgba(230,57,70,.22);}
-.pcard-img{width:100%;height:165px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:52px;}
+.pcard-wish{position:absolute;top:10px;left:10px;background:rgba(7,7,13,.75);border:2px solid var(--accent);font-size:16px;width:34px;height:34px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .22s;backdrop-filter:blur(6px);z-index:2;box-shadow:0 0 8px rgba(230,57,70,.4);}
+.pcard-wish:hover{transform:scale(1.18);box-shadow:0 0 14px rgba(230,57,70,.7);background:rgba(230,57,70,.2);}
+.pcard-wish.saved{background:rgba(230,57,70,.3);box-shadow:0 0 14px rgba(230,57,70,.6);}
+.pcard-wish.pop{animation:wishPop .35s cubic-bezier(.175,.885,.32,1.275);}
+@keyframes wishPop{0%{transform:scale(1)}40%{transform:scale(1.6)}70%{transform:scale(.88)}100%{transform:scale(1)}}
+.heart-particle{position:fixed;pointer-events:none;z-index:9999;font-size:18px;animation:heartFly .8s ease-out forwards;}
+@keyframes heartFly{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(0.3)}}
+
 .pcard-body{padding:15px;}
 .pcard-cat{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--accent);font-weight:700;margin-bottom:5px;}
 .pcard-stars{color:var(--gold);font-size:11px;margin-bottom:8px;}
@@ -209,10 +213,116 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:40px
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 .hero>*{animation:fadeUp .55s ease both;}
 .hero>*:nth-child(2){animation-delay:.08s}.hero>*:nth-child(3){animation-delay:.16s}.hero>*:nth-child(4){animation-delay:.24s}.hero>*:nth-child(5){animation-delay:.32s}
-@media(max-width:768px){nav{padding:13px 16px;}.nav-links{display:none;}.hero{padding:60px 16px 36px;}.section{padding:0 16px 60px;}.search-wrap{padding:0 16px;}.pro-section{margin:0 16px 60px;padding:36px 18px;}}
+
+/* FILTER BAR */
+.filter-bar{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-bottom:20px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:14px;}
+.filter-group{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.filter-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;white-space:nowrap;}
+.filter-btn{padding:5px 13px;border-radius:50px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;}
+.filter-btn:hover,.filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+
+/* DEAL OF THE DAY */
+.dotd-wrap{max-width:1280px;margin:0 auto 40px;padding:0 40px;}
+.dotd-inner{background:linear-gradient(135deg,#130e1a,#1a1020);border:1px solid rgba(230,57,70,.25);border-radius:22px;padding:36px;display:flex;align-items:center;gap:40px;position:relative;overflow:hidden;}
+.dotd-inner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top left,rgba(230,57,70,.08),transparent 60%);pointer-events:none;}
+.dotd-left{flex:1;min-width:0;}
+.dotd-eyebrow{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--accent2);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;}
+.dotd-title{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;letter-spacing:-0.5px;margin-bottom:8px;line-height:1.2;}
+.dotd-desc{color:var(--muted);font-size:14px;margin-bottom:16px;line-height:1.5;}
+.dotd-pricing{display:flex;align-items:baseline;gap:10px;margin-bottom:20px;}
+.dotd-price{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:var(--accent2);}
+.dotd-old{font-size:16px;color:var(--muted);text-decoration:line-through;}
+.dotd-save{background:var(--accent);color:#fff;font-size:11px;font-weight:800;padding:3px 10px;border-radius:50px;}
+.dotd-btns{display:flex;gap:10px;flex-wrap:wrap;}
+.dotd-img{width:180px;height:180px;flex-shrink:0;background:var(--surface2);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:72px;overflow:hidden;}
+.dotd-img img{width:100%;height:100%;object-fit:contain;padding:12px;}
+
+/* TRUST SECTION */
+.trust-section{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:48px 40px;margin-bottom:0;}
+.trust-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px;}
+.trust-item{text-align:center;}
+.trust-icon{font-size:32px;margin-bottom:10px;}
+.trust-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:6px;}
+.trust-desc{color:var(--muted);font-size:13px;line-height:1.6;}
+
+/* NEWSLETTER */
+.newsletter-section{background:linear-gradient(135deg,#0d0d14,#130e1a);border-top:1px solid var(--border);padding:60px 40px;text-align:center;}
+.newsletter-inner{max-width:520px;margin:0 auto;}
+.nl-icon{font-size:44px;margin-bottom:14px;}
+.nl-title{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;letter-spacing:-1px;margin-bottom:8px;}
+.nl-sub{color:var(--muted);font-size:15px;margin-bottom:28px;line-height:1.5;}
+.nl-form{display:flex;gap:8px;margin-bottom:10px;}
+.nl-input{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:50px;padding:13px 20px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:all .2s;}
+.nl-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(230,57,70,.12);}
+.nl-input::placeholder{color:var(--muted);}
+.nl-btn{background:var(--accent);color:#fff;border:none;border-radius:50px;padding:13px 22px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .2s;}
+.nl-btn:hover{background:#d62f3c;transform:translateY(-1px);}
+.nl-note{color:var(--muted);font-size:12px;}
+
+/* FOOTER LINKS */
+.footer-links{display:flex;gap:20px;justify-content:center;margin-bottom:14px;flex-wrap:wrap;}
+.footer-link{color:var(--muted);font-size:13px;cursor:pointer;text-decoration:none;transition:color .2s;}
+.footer-link:hover{color:var(--text);}
+
+/* COOKIE BANNER */
+.cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:999;background:var(--surface);border-top:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;backdrop-filter:blur(12px);}
+.cookie-text{font-size:13px;color:var(--muted);flex:1;}
+.cookie-btn{background:var(--accent);color:#fff;border:none;border-radius:50px;padding:8px 20px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;}
+
+/* PRODUCT IMAGE */
+.pcard-img{width:100%;height:165px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:52px;overflow:hidden;}
+.pcard-img img{width:100%;height:100%;object-fit:contain;padding:10px;transition:transform .3s;}
+.pcard:hover .pcard-img img{transform:scale(1.06);}
+
+
+/* PRO FEATURES GRID */
+.pro-features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:40px;text-align:left;}
+.pro-feat{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:20px;transition:all .25s;}
+.pro-feat:hover{border-color:rgba(246,211,101,.3);transform:translateY(-3px);}
+.pro-feat-icon{font-size:28px;margin-bottom:10px;}
+.pro-feat-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:6px;}
+.pro-feat-desc{color:var(--muted);font-size:12px;line-height:1.6;}
+
+/* PRO LOCKED CARD OVERLAY */
+.pcard-lock{position:absolute;inset:0;background:rgba(7,7,13,.82);backdrop-filter:blur(3px);border-radius:var(--radius);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;z-index:3;cursor:pointer;}
+.pcard-lock-icon{font-size:28px;}
+.pcard-lock-text{font-size:11px;font-weight:700;color:var(--accent2);text-align:center;line-height:1.4;}
+.pcard-lock-btn{background:linear-gradient(135deg,#f6d365,#fda085);color:#1a1a1a;border:none;border-radius:50px;padding:6px 14px;font-size:11px;font-weight:800;cursor:pointer;margin-top:2px;}
+
+/* DEAL SCORE BADGE */
+.deal-score{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:800;padding:2px 8px;border-radius:50px;margin-bottom:6px;}
+.score-great{background:rgba(34,197,94,.15);color:#22c55e;border:1px solid rgba(34,197,94,.3);}
+.score-good{background:rgba(255,159,28,.12);color:#ff9f1c;border:1px solid rgba(255,159,28,.25);}
+.score-ok{background:rgba(107,107,138,.15);color:var(--muted);border:1px solid var(--border);}
+
+/* ALERT BADGE on card */
+.pcard-alert-dot{position:absolute;top:46px;left:10px;width:10px;height:10px;border-radius:50%;background:var(--accent2);border:2px solid var(--bg);z-index:2;animation:pulse 2s infinite;}
+
+/* FREE AD BANNER */
+.free-ad-banner{background:var(--surface2);border:1px dashed rgba(255,255,255,.08);border-radius:10px;padding:12px 18px;text-align:center;color:var(--muted);font-size:12px;grid-column:1/-1;cursor:pointer;}
+.free-ad-banner:hover{border-color:var(--accent);color:var(--accent);}
+
+/* COLLECTION ITEM */
+.col-item{background:var(--surface2);border:1px solid var(--border);border-radius:11px;padding:13px 16px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.col-item-name{font-size:13px;font-weight:600;}
+.col-item-count{font-size:11px;color:var(--muted);}
+.col-item-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;padding:2px 6px;border-radius:6px;transition:color .2s;}
+.col-item-del:hover{color:var(--danger);}
+
+/* EARLY ACCESS BANNER */
+.early-access-card{background:linear-gradient(135deg,rgba(246,211,101,.06),rgba(253,160,133,.04));border:1px solid rgba(246,211,101,.2);border-radius:var(--radius);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;}
+.ea-badge{background:linear-gradient(135deg,#f6d365,#fda085);color:#1a1a1a;font-size:9px;font-weight:800;padding:3px 8px;border-radius:50px;white-space:nowrap;}
+
+@media(max-width:768px){nav{padding:13px 16px;}.nav-links{display:none;}.hero{padding:60px 16px 36px;}.section{padding:0 16px 60px;}.search-wrap{padding:0 16px;}.pro-section{margin:0 16px 60px;padding:36px 18px;}.nav-right .btn{padding:6px 11px;font-size:11px;}.nav-right .btn-red{padding:6px 11px;font-size:11px;}.product-grid{grid-template-columns:repeat(2,1fr)!important;}.dotd-inner{flex-direction:column;gap:20px;}.dotd-img{width:120px;height:120px;}.dotd-wrap{padding:0 16px;}.trust-section{padding:36px 16px;}.newsletter-section{padding:40px 16px;}.nl-form{flex-direction:column;}.filter-bar{padding:10px 12px;gap:10px;}.dotd-title{font-size:18px;}}
 </style>
 </head>
 <body>
+
+<!-- COOKIE BANNER -->
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-text">🍪 We use affiliate links to Amazon. No tracking cookies are used on this site. <a href="#" onclick="showToast('Privacy: We use no tracking cookies. Affiliate links go to Amazon.','🔒');return false" style="color:var(--accent2)">Learn more</a></div>
+  <button class="cookie-btn" onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('cookieOk','1')">Got it ✓</button>
+</div>
 
 <div class="toast" id="toast"><span id="toastIcon">✓</span><span id="toastMsg"></span></div>
 
@@ -254,20 +364,22 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:40px
         <input type="file" id="avatarFileInput" accept="image/*" onchange="uploadAvatar(this)">
       </div>
       <div class="prof-name" id="profName">User</div>
-      <div class="prof-email-disp" id="profEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0e7b7d6b7c4e6b636f6762206d6163">[email&#160;protected]</a></div>
-      <div><div class="plan-chip chip-free">🆓 Free Plan</div></div>
+      <div class="prof-email-disp" id="profEmail">user@example.com</div>
+      <div><div class="plan-chip" id="planChip">🆓 Free Plan</div></div>
     </div>
     <div class="prof-tabs">
       <button class="prof-tab active" onclick="switchProfTab('overview',this)">📊 Overview</button>
-      <button class="prof-tab" onclick="switchProfTab('edit',this)">✏️ Edit Profile</button>
+      <button class="prof-tab" onclick="switchProfTab('edit',this)">✏️ Edit</button>
       <button class="prof-tab" onclick="switchProfTab('wishlist',this)">❤️ Saved</button>
-      <button class="prof-tab" onclick="switchProfTab('settings',this)">⚙️ Settings</button>
+      <button class="prof-tab" onclick="switchProfTab('alerts',this)">🔔 Alerts</button>
+      <button class="prof-tab" onclick="switchProfTab('collections',this)">📁 Lists</button>
+      <button class="prof-tab" onclick="switchProfTab('settings',this)">⚙️</button>
     </div>
     <div class="prof-body">
       <div class="prof-section active" id="tab-overview">
         <div class="stat-row">
           <div class="stat-box"><div class="stat-num" id="statSaved">0</div><div class="stat-label">Saved Deals</div></div>
-          <div class="stat-box"><div class="stat-num">27</div><div class="stat-label">Total Products</div></div>
+          <div class="stat-box"><div class="stat-num">189</div><div class="stat-label">Total Products</div></div>
           <div class="stat-box"><div class="stat-num" id="statDays">1</div><div class="stat-label">Days Member</div></div>
         </div>
         <p style="color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:18px">Welcome to <strong style="color:var(--text)">NewDeals 🔥</strong>! Browse real Amazon deals, save your favourites and upgrade for price alerts.</p>
@@ -290,6 +402,18 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:40px
       <div class="prof-section" id="tab-wishlist">
         <p style="color:var(--muted);font-size:13px;margin-bottom:14px">Your saved deals</p>
         <div id="wishlistContainer"><div style="text-align:center;padding:36px 0;color:var(--muted)"><div style="font-size:40px;margin-bottom:10px">💔</div><div>No saved deals yet.<br>Click ❤️ on any product!</div></div></div>
+      </div>
+      <div class="prof-section" id="tab-alerts">
+        <p style="color:var(--muted);font-size:13px;margin-bottom:14px">Your active price alerts — checked every time you visit.</p>
+        <div id="alertsList"><div style="text-align:center;padding:28px 0;color:var(--muted)"><div style="font-size:36px;margin-bottom:8px">🔔</div><div>No alerts set yet.<br>Open any deal and click <strong>Set Alert</strong>.</div></div></div>
+      </div>
+      <div class="prof-section" id="tab-collections">
+        <p style="color:var(--muted);font-size:13px;margin-bottom:14px">Save deals into named lists.</p>
+        <div style="display:flex;gap:8px;margin-bottom:16px">
+          <input class="form-input" type="text" id="profColName" placeholder="New list name..." style="flex:1;font-size:13px;padding:9px 13px">
+          <button class="btn btn-red" onclick="createCollectionFromProfile()" style="white-space:nowrap;font-size:12px;padding:9px 14px">+ Create</button>
+        </div>
+        <div id="profileCollectionsList"></div>
       </div>
       <div class="prof-section" id="tab-settings">
         <div class="toggle-row"><div><div class="toggle-title">Email Notifications</div><div class="toggle-desc">Price drops & deal alerts</div></div><label class="toggle"><input type="checkbox" checked onchange="showToast('Setting saved','⚙️')"><span class="toggle-slider"></span></label></div>
@@ -346,12 +470,33 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:40px
     <button class="btn btn-outline" style="padding:13px 28px;font-size:15px" onclick="showAuth('register')">Create Free Account</button>
   </div>
   <div class="hero-stats">
-    <div class="hstat"><div class="hstat-num">27+</div><div class="hstat-label">Products</div></div>
-    <div class="hstat"><div class="hstat-num">€2.4M</div><div class="hstat-label">Saved by users</div></div>
-    <div class="hstat"><div class="hstat-num">98%</div><div class="hstat-label">Satisfied</div></div>
-    <div class="hstat"><div class="hstat-num">24/7</div><div class="hstat-label">Live updates</div></div>
+    <div class="hstat"><div class="hstat-num">189+</div><div class="hstat-label">Deals Listed</div></div>
+    <div class="hstat"><div class="hstat-num">15</div><div class="hstat-label">Categories</div></div>
+    <div class="hstat"><div class="hstat-num">Free</div><div class="hstat-label">Always Free</div></div>
+    <div class="hstat"><div class="hstat-num">Amazon</div><div class="hstat-label">Secure Checkout</div></div>
   </div>
 </section>
+
+<!-- DEAL OF THE DAY -->
+<div class="dotd-wrap" id="dotdSection">
+  <div class="dotd-inner">
+    <div class="dotd-left">
+      <div class="dotd-eyebrow"><span class="live-dot"></span> Deal of the Day</div>
+      <div class="dotd-title" id="dotdTitle">Loading...</div>
+      <div class="dotd-desc" id="dotdDesc"></div>
+      <div class="dotd-pricing">
+        <span class="dotd-price" id="dotdPrice"></span>
+        <span class="dotd-old" id="dotdOld"></span>
+        <span class="dotd-save" id="dotdSave"></span>
+      </div>
+      <div class="dotd-btns">
+        <a class="btn btn-red" id="dotdBuy" href="#" target="_blank" rel="noopener" style="padding:11px 26px;font-size:14px;text-decoration:none">🛒 Buy on Amazon</a>
+        <button class="btn btn-outline" onclick="nextDotd()" style="padding:11px 18px;font-size:13px">Next Deal →</button>
+      </div>
+    </div>
+    <div class="dotd-img" id="dotdImg"></div>
+  </div>
+</div>
 
 <!-- SEARCH -->
 <div class="search-wrap">
@@ -367,7 +512,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:40px
     <h2 class="section-title">Today's Best Deals</h2>
     <div class="live-badge"><span class="live-badge-dot"></span> Live from Amazon</div>
   </div>
-  <p class="section-sub">Click any product to go directly to Amazon and buy. Every purchase supports NewDeals! 💸</p>
+  <p class="section-sub">Click any product to go directly to Amazon and buy. Every purchase supports NewDeals! 💸 &nbsp;|&nbsp; <span id="productCount">189</span> deals available</p>
   <div class="live-banner">
     <div class="lb-left">
       <div class="lb-icon">⚡</div>
@@ -376,7 +521,30 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:40px
         <div class="lb-sub">All links go directly to Amazon.de — secure checkout, all payment methods accepted.</div>
       </div>
     </div>
-    <button class="btn btn-red" onclick="refreshDeals()">↻ Refresh</button>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <div class="early-access-card" style="margin:0;cursor:pointer" onclick="document.getElementById('pro').scrollIntoView({behavior:'smooth'})">
+        <span class="ea-badge">PRO ONLY</span>
+        <span style="font-size:12px;color:var(--muted)">⚡ 3 new deals available 24h early</span>
+      </div>
+      <button class="btn btn-red" onclick="refreshDeals()">↻ Refresh</button>
+    </div>
+  </div>
+  <!-- FILTER + SORT BAR -->
+  <div class="filter-bar">
+    <div class="filter-group">
+      <span class="filter-label">💰 Budget:</span>
+      <button class="filter-btn active" onclick="setPriceFilter('all',this)">All</button>
+      <button class="filter-btn" onclick="setPriceFilter('under25',this)">Under €25</button>
+      <button class="filter-btn" onclick="setPriceFilter('25to100',this)">€25–€100</button>
+      <button class="filter-btn" onclick="setPriceFilter('over100',this)">€100+</button>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">↕ Sort:</span>
+      <button class="filter-btn active" onclick="setSort('default',this)">Default</button>
+      <button class="filter-btn" onclick="setSort('discount',this)">Best Deal</button>
+      <button class="filter-btn" onclick="setSort('priceasc',this)">Price ↑</button>
+      <button class="filter-btn" onclick="setSort('pricedesc',this)">Price ↓</button>
+    </div>
   </div>
   <div class="tabs" id="tabs">
     <button class="tab active" onclick="filterCat('all',this)">⚡ All</button>
@@ -387,6 +555,13 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:40px
     <button class="tab" onclick="filterCat('fashion',this)">👗 Fashion</button>
     <button class="tab" onclick="filterCat('beauty',this)">✨ Beauty</button>
     <button class="tab" onclick="filterCat('books',this)">📚 Books</button>
+    <button class="tab" onclick="filterCat('toys',this)">🧸 Toys</button>
+    <button class="tab" onclick="filterCat('food',this)">🍕 Food & Drink</button>
+    <button class="tab" onclick="filterCat('travel',this)">✈️ Travel</button>
+    <button class="tab" onclick="filterCat('pets',this)">🐾 Pets</button>
+    <button class="tab" onclick="filterCat('office',this)">💼 Office</button>
+    <button class="tab" onclick="filterCat('auto',this)">🚗 Automotive</button>
+    <button class="tab" onclick="filterCat('health',this)">💊 Health</button>
   </div>
   <div id="productGrid" class="product-grid"></div>
 </div>
@@ -395,21 +570,35 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:40px
 <div class="pro-section" id="pro">
   <div style="font-size:44px;margin-bottom:14px">👑</div>
   <h2>NewDeals PRO</h2>
-  <p>Price alerts, exclusive deals, ad-free browsing and full wishlist — all unlocked.</p>
+  <p>Real features that save you real money — price drop alerts, exclusive deals, deal collections and more.</p>
+
+  <!-- PRO FEATURES SHOWCASE -->
+  <div class="pro-features-grid">
+    <div class="pro-feat"><div class="pro-feat-icon">🔔</div><div class="pro-feat-title">Price Drop Alerts</div><div class="pro-feat-desc">Set a target price on any deal. We alert you the moment it drops — never miss a sale again.</div></div>
+    <div class="pro-feat"><div class="pro-feat-icon">🔐</div><div class="pro-feat-title">Exclusive Pro Deals</div><div class="pro-feat-desc">Unlock hidden deals not visible to free users. Premium products, bigger discounts, early access.</div></div>
+    <div class="pro-feat"><div class="pro-feat-icon">📁</div><div class="pro-feat-title">Deal Collections</div><div class="pro-feat-desc">Organise deals into named lists — "Christmas Gifts", "Home Office", "Wishlist". Unlimited collections.</div></div>
+    <div class="pro-feat"><div class="pro-feat-icon">📊</div><div class="pro-feat-title">Deal Score</div><div class="pro-feat-desc">Every product gets an AI-style Deal Score out of 100 — so you instantly know if it's worth buying.</div></div>
+    <div class="pro-feat"><div class="pro-feat-icon">⚡</div><div class="pro-feat-title">Early Access</div><div class="pro-feat-desc">Pro users see new deals 24 hours before everyone else. First pick, best stock.</div></div>
+    <div class="pro-feat"><div class="pro-feat-icon">🚫</div><div class="pro-feat-title">Ad-Free</div><div class="pro-feat-desc">No banners, no distractions. A clean, fast browsing experience from top to bottom.</div></div>
+  </div>
+
   <div class="pricing-row">
     <div class="price-card">
       <div class="price-name">Free</div>
       <div class="price-amt"><span style="font-size:18px;vertical-align:top;margin-top:10px;display:inline-block">€</span>0</div>
       <div class="price-period">forever free</div>
       <ul class="price-list">
-        <li>Browse all deals</li>
-        <li>Category filters</li>
-        <li>5 wishlist slots</li>
-        <li class="no">Price alerts</li>
+        <li>Browse all 189 deals</li>
+        <li>15 category filters</li>
+        <li>Price &amp; sort filters</li>
+        <li>5 saved deals</li>
+        <li class="no">Price drop alerts</li>
         <li class="no">Exclusive Pro deals</li>
+        <li class="no">Deal collections</li>
+        <li class="no">Deal Score</li>
         <li class="no">Ad-free</li>
       </ul>
-      <button class="upgrade-btn upgrade-free" onclick="showAuth('register')">Get Started</button>
+      <button class="upgrade-btn upgrade-free" onclick="showAuth('register')">Get Started Free</button>
     </div>
     <div class="price-card featured">
       <div class="pop-tag">⚡ Most Popular</div>
@@ -418,38 +607,110 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:40px
       <div class="price-period">per month · cancel anytime</div>
       <ul class="price-list">
         <li>Everything in Free</li>
-        <li>Unlimited wishlist</li>
-        <li>🔔 Price alerts</li>
-        <li>🔐 Exclusive deals</li>
-        <li>📊 Price history</li>
-        <li>🚫 Ad-free</li>
+        <li>Unlimited saved deals</li>
+        <li>🔔 Price drop alerts</li>
+        <li>🔐 Exclusive Pro deals</li>
+        <li>📁 Deal collections</li>
+        <li>📊 Deal Score on all products</li>
+        <li>⚡ 24h early access</li>
+        <li>🚫 Ad-free browsing</li>
+        <li>✉️ Weekly deal digest email</li>
       </ul>
-      <button class="upgrade-btn upgrade-pro" onclick="openPayModal('👑','NewDeals Pro','€6.99/month',null)">Go Pro ✨</button>
+      <button class="upgrade-btn upgrade-pro" onclick="goPro('monthly')">Go Pro ✨</button>
     </div>
     <div class="price-card">
       <div class="price-name">Pro Yearly</div>
       <div class="price-amt"><span style="font-size:18px;vertical-align:top;margin-top:10px;display:inline-block">€</span>49<span style="font-size:18px">.99</span></div>
-      <div class="price-period">per year · save 40%</div>
+      <div class="price-period">per year · save 40% = €33 off</div>
       <ul class="price-list">
-        <li>Everything in Pro</li>
-        <li>Priority support</li>
-        <li>Early beta features</li>
-        <li>🔔 Price alerts</li>
-        <li>🔐 Exclusive deals</li>
+        <li>Everything in Pro Monthly</li>
+        <li>Priority email support</li>
+        <li>🎁 Bonus: 1 month free</li>
+        <li>🔔 Price drop alerts</li>
+        <li>🔐 Exclusive Pro deals</li>
+        <li>📁 Unlimited collections</li>
+        <li>📊 Deal Score</li>
+        <li>⚡ Early access</li>
         <li>🚫 Ad-free</li>
       </ul>
-      <button class="upgrade-btn upgrade-pro" onclick="openPayModal('👑','NewDeals Pro Yearly','€49.99/year',null)">Save 40% 💰</button>
+      <button class="upgrade-btn upgrade-pro" onclick="goPro('yearly')">Save 40% 💰</button>
     </div>
+  </div>
+</div>
+
+<!-- PRICE ALERT OVERLAY -->
+<div class="overlay" id="alertOverlay">
+  <div class="modal" style="max-width:400px">
+    <button class="modal-close" onclick="closeOverlay('alertOverlay')">×</button>
+    <div style="font-size:36px;margin-bottom:10px">🔔</div>
+    <div class="modal-title" style="font-size:22px">Set Price Alert</div>
+    <div class="modal-sub" id="alertProductName">Get notified when this deal drops to your target price.</div>
+    <div class="form-group">
+      <label class="form-label">Target Price (€)</label>
+      <input class="form-input" type="number" id="alertTargetPrice" placeholder="e.g. 49.99" step="0.01" min="0">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Notify me via</label>
+      <select class="form-input" id="alertMethod">
+        <option value="browser">Browser notification</option>
+        <option value="email">Email (requires account)</option>
+      </select>
+    </div>
+    <button class="submit-btn" onclick="saveAlert()">🔔 Set Alert</button>
+    <div style="margin-top:12px;text-align:center;color:var(--muted);font-size:12px">Alerts are checked each time you visit NewDeals</div>
+  </div>
+</div>
+
+<!-- COLLECTIONS OVERLAY -->
+<div class="overlay" id="collectionsOverlay">
+  <div class="modal" style="max-width:460px">
+    <button class="modal-close" onclick="closeOverlay('collectionsOverlay')">×</button>
+    <div class="modal-title" style="font-size:22px">📁 My Collections</div>
+    <div class="modal-sub">Organise your deals into named lists.</div>
+    <div style="display:flex;gap:8px;margin-bottom:18px">
+      <input class="form-input" type="text" id="newColName" placeholder="Collection name..." style="flex:1">
+      <button class="btn btn-red" onclick="createCollection()" style="white-space:nowrap">+ New</button>
+    </div>
+    <div id="collectionsList"></div>
+  </div>
+</div>
+
+<!-- TRUST SECTION -->
+<div class="trust-section">
+  <div class="trust-inner">
+    <div class="trust-item"><div class="trust-icon">🔒</div><div class="trust-title">Secure Shopping</div><div class="trust-desc">All purchases go through Amazon's secure checkout. We never handle your payment details.</div></div>
+    <div class="trust-item"><div class="trust-icon">💸</div><div class="trust-title">Affiliate Disclosure</div><div class="trust-desc">We earn a small commission when you buy via our links — at no extra cost to you.</div></div>
+    <div class="trust-item"><div class="trust-icon">🔄</div><div class="trust-title">Updated Regularly</div><div class="trust-desc">Our deals are curated and updated regularly. Check back often for new offers.</div></div>
+    <div class="trust-item"><div class="trust-icon">🇩🇪</div><div class="trust-title">Amazon.de</div><div class="trust-desc">All deals link to Amazon Germany. Prices shown are for reference — live prices on Amazon may vary.</div></div>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="newsletter-section">
+  <div class="newsletter-inner">
+    <div class="nl-icon">📬</div>
+    <div class="nl-title">Get the best deals in your inbox</div>
+    <div class="nl-sub">Join deal hunters who save money every week. Free, no spam, unsubscribe anytime.</div>
+    <div class="nl-form">
+      <input class="nl-input" type="email" id="nlEmail" placeholder="your@email.com">
+      <button class="nl-btn" onclick="doNewsletter()">Subscribe Free →</button>
+    </div>
+    <div class="nl-note">🔒 No spam. Unsubscribe with one click.</div>
   </div>
 </div>
 
 <footer>
   <div class="footer-logo"><span style="background:linear-gradient(90deg,#e63946,#ff9f1c);-webkit-background-clip:text;-webkit-text-fill-color:transparent">NewDeals</span> 🔥</div>
-  <div>The #1 Amazon Deals Platform</div>
-  <div class="affiliate-note">* NewDeals participates in the Amazon affiliate program. As an Amazon Associate we earn from qualifying purchases. This does not increase your price in any way.</div>
+  <div style="margin-bottom:16px;color:var(--muted)">Your shortcut to the best Amazon deals</div>
+  <div class="footer-links">
+    <a href="#deals" class="footer-link">Deals</a>
+    <a href="#pro" class="footer-link">Pro</a>
+    <span class="footer-link" onclick="showToast('Impressum: NewDeals is an Amazon affiliate site. Contact: info@newdeals.de','ℹ️')">Impressum</span>
+    <span class="footer-link" onclick="showToast('Privacy: We use no tracking cookies. Affiliate links go to Amazon.','🔒')">Privacy</span>
+  </div>
+  <div class="affiliate-note">* NewDeals participates in the Amazon EU affiliate programme. As an Amazon Associate we earn from qualifying purchases. Prices shown are for reference only — live prices on Amazon.de may differ. This does not increase your price in any way.</div>
+  <div style="margin-top:14px;color:rgba(255,255,255,.1);font-size:11px">© 2025 NewDeals · Not affiliated with Amazon.com, Inc.</div>
 </footer>
-
-
 
 <script>
 // ============================================================
@@ -470,65 +731,65 @@ function amzSearch(q) {
 // ============================================================
 const ALL_PRODUCTS = [
   // ===== SPORT (15) =====
-  {id:1,  cat:'sport',icon:'🏋️',title:'Bowflex SelectTech Dumbbells',desc:'Adjustable 2–24kg, replaces 15 sets.',price:'€299,00',old:'€399,00',badge:'−25%',asin:'B001ARYU58',stars:'★★★★★'},
-  {id:2,  cat:'sport',icon:'🚴',title:'Ultrasport F-Bike 200B',desc:'Indoor cycling, LCD display, foldable.',price:'€89,99',old:'€129,99',badge:'−30%',asin:'B003TDTPLI',stars:'★★★★☆'},
-  {id:3,  cat:'sport',icon:'🧘',title:'TOPLUS Yoga Mat 6mm',desc:'Non-slip TPE, eco-friendly, carry strap.',price:'€24,99',old:'€39,99',badge:'HOT',asin:'B07BGLXBNM',stars:'★★★★★'},
-  {id:4,  cat:'sport',icon:'🏃',title:'Garmin Forerunner 55',desc:'GPS running watch, heart rate, 20h.',price:'€149,00',old:'€199,99',badge:'−25%',asin:'B096BQJ4SB',stars:'★★★★★'},
-  {id:5,  cat:'sport',icon:'💪',title:'TRX Home Suspension Trainer',desc:'Full body workout, door anchor included.',price:'€79,95',old:'€119,95',badge:'DEAL',asin:'B08CNGXVD5',stars:'★★★★☆'},
-  {id:51, cat:'sport',icon:'🥊',title:'Everlast Boxing Gloves 16oz',desc:'Pro training gloves, foam padding.',price:'€34,99',old:'€54,99',badge:'−36%',asin:'B0009ZA6VC',stars:'★★★★☆'},
-  {id:52, cat:'sport',icon:'⛹️',title:'Under Armour Hovr Sonic 5',desc:'GPS running shoe, MapMyRun tracking.',price:'€69,95',old:'€109,95',badge:'−36%',asin:'B09V4RHGFJ',stars:'★★★★★'},
-  {id:53, cat:'sport',icon:'🏊',title:'Speedo Fastskin Goggles',desc:'UV protection, anti-fog racing lenses.',price:'€19,99',old:'€34,99',badge:'−43%',asin:'B000BKNDBO',stars:'★★★★☆'},
-  {id:54, cat:'sport',icon:'🧗',title:'Kettlebell 16kg Cast Iron',desc:'Powder coated, competition grip.',price:'€29,99',old:'€44,99',badge:'−33%',asin:'B000GIRK0Y',stars:'★★★★★'},
+  {id:1,  cat:'sport',icon:'🏋️',title:'Bowflex SelectTech Dumbbells',desc:'Adjustable 2–24kg, replaces 15 sets.',price:'€299,00',old:'€399,00',badge:'−25%',asin:'B001ARYU58',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/71RIxGEWneL._AC_SX679_.jpg'},
+  {id:2,  cat:'sport',icon:'🚴',title:'Ultrasport F-Bike 200B',desc:'Indoor cycling, LCD display, foldable.',price:'€89,99',old:'€129,99',badge:'−30%',asin:'B003TDTPLI',stars:'★★★★☆',img:'https://m.media-amazon.com/images/I/61dBbmrMqLL._AC_SX679_.jpg'},
+  {id:3,  cat:'sport',icon:'🧘',title:'TOPLUS Yoga Mat 6mm',desc:'Non-slip TPE, eco-friendly, carry strap.',price:'€24,99',old:'€39,99',badge:'HOT',asin:'B07BGLXBNM',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/71qBqBTPP5L._AC_SX679_.jpg'},
+  {id:4,  cat:'sport',icon:'🏃',title:'Garmin Forerunner 55',desc:'GPS running watch, heart rate, 20h.',price:'€149,00',old:'€199,99',badge:'−25%',asin:'B096BQJ4SB',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/61m5t9x3VoL._AC_SX679_.jpg'},
+  {id:5,  cat:'sport',icon:'💪',title:'TRX Home Suspension Trainer',desc:'Full body workout, door anchor included.',price:'€79,95',old:'€119,95',badge:'DEAL',asin:'B08CNGXVD5',stars:'★★★★☆',img:'https://m.media-amazon.com/images/I/71X6c5sHKVL._AC_SX679_.jpg'},
+  {id:51, cat:'sport',icon:'🥊',title:'Everlast Boxing Gloves 16oz',desc:'Pro training gloves, foam padding.',price:'€34,99',old:'€54,99',badge:'−36%',asin:'B0009ZA6VC',stars:'★★★★☆',img:'https://m.media-amazon.com/images/I/71rjnUCRqSL._AC_SX679_.jpg'},
+  {id:52, cat:'sport',icon:'⛹️',title:'Under Armour Hovr Sonic 5',desc:'GPS running shoe, MapMyRun tracking.',price:'€69,95',old:'€109,95',badge:'−36%',asin:'B09V4RHGFJ',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/71yKy2GHDVL._AC_SX679_.jpg'},
+  {id:53, cat:'sport',icon:'🏊',title:'Speedo Fastskin Goggles',desc:'UV protection, anti-fog racing lenses.',price:'€19,99',old:'€34,99',badge:'−43%',asin:'B000BKNDBO',stars:'★★★★☆',img:'https://m.media-amazon.com/images/I/618r7MHAFCL._AC_SX679_.jpg'},
+  {id:54, cat:'sport',icon:'🧗',title:'Kettlebell 16kg Cast Iron',desc:'Powder coated, competition grip.',price:'€29,99',old:'€44,99',badge:'−33%',asin:'B000GIRK0Y',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/71pS2dCRheL._AC_SX679_.jpg'},
   {id:55, cat:'sport',icon:'🏸',title:'Wilson Badminton Racket Set',desc:'2 rackets + shuttlecocks, carry bag.',price:'€27,99',old:'€44,99',badge:'−37%',asin:'B000BKXFK0',stars:'★★★★☆'},
   {id:56, cat:'sport',icon:'⚽',title:'Adidas UEFA Champions Ball',desc:'Official match ball, thermally bonded.',price:'€39,99',old:'€59,99',badge:'−33%',asin:'B0BHKFTYBD',stars:'★★★★★'},
   {id:57, cat:'sport',icon:'🧲',title:'Resistance Bands Set (5)',desc:'5 levels, latex-free, door anchor incl.',price:'€15,99',old:'€24,99',badge:'−36%',asin:'B07G5BCKN3',stars:'★★★★☆'},
   {id:58, cat:'sport',icon:'🏂',title:'Rollerblade Zetrablade Adults',desc:'Inline skates, 80mm wheels, ABEC 7.',price:'€79,99',old:'€119,99',badge:'−33%',asin:'B00FEWTFI0',stars:'★★★★☆'},
   {id:59, cat:'sport',icon:'🥅',title:'Pure2Improve Pull-Up Bar',desc:'Doorframe bar, no screws, 100kg max.',price:'€19,99',old:'€29,99',badge:'−33%',asin:'B00A67ULMW',stars:'★★★★★'},
-  {id:60, cat:'sport',icon:'🎽',title:'Polar H10 Heart Rate Sensor',desc:'Most accurate HR sensor, Bluetooth & ANT+.',price:'€79,90',old:'€99,90',badge:'−20%',asin:'B07CCRFP7Y',stars:'★★★★★'},
+  {id:60, cat:'sport',icon:'🎽',title:'Polar H10 Heart Rate Sensor',desc:'Most accurate HR sensor, Bluetooth & ANT+.',price:'€79,90',old:'€99,90',badge:'−20%',asin:'B07CCRFP7Y',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/51TtnsSzU2L._AC_SX679_.jpg'},
 
   // ===== ELECTRONICS (15) =====
-  {id:6,  cat:'tech',icon:'🎧',title:'Sony WH-1000XM5',desc:'Best-in-class noise cancelling, 30h.',price:'€279,00',old:'€379,00',badge:'−26%',asin:'B09XS7JWHH',stars:'★★★★★',pro:true},
-  {id:7,  cat:'tech',icon:'💻',title:'Apple MacBook Air M2',desc:'13" Retina, 8GB RAM, 256GB SSD.',price:'€1.099,00',old:'€1.299,00',badge:'−15%',asin:'B0B3C2R8MP',stars:'★★★★★',pro:true},
-  {id:8,  cat:'tech',icon:'📱',title:'Samsung Galaxy S24',desc:'6.2" AMOLED 120Hz, 50MP, 5G.',price:'€699,00',old:'€899,00',badge:'−22%',asin:'B0CQTDB7PC',stars:'★★★★★'},
-  {id:9,  cat:'tech',icon:'⌚',title:'Apple Watch Series 9',desc:'GPS, always-on display, crash detection.',price:'€399,00',old:'€499,00',badge:'−20%',asin:'B0CHX7R6WJ',stars:'★★★★★'},
-  {id:10, cat:'tech',icon:'📷',title:'Sony Alpha ZV-E10',desc:'Mirrorless vlog cam, 4K, APS-C.',price:'€549,00',old:'€749,00',badge:'−26%',asin:'B09BLYXN2G',stars:'★★★★☆',pro:true},
+  {id:6,  cat:'tech',icon:'🎧',title:'Sony WH-1000XM5',desc:'Best-in-class noise cancelling, 30h.',price:'€279,00',old:'€379,00',badge:'−26%',asin:'B09XS7JWHH',stars:'★★★★★',pro:true,img:'https://m.media-amazon.com/images/I/61vJNSBcMQL._AC_SX679_.jpg'},
+  {id:7,  cat:'tech',icon:'💻',title:'Apple MacBook Air M2',desc:'13" Retina, 8GB RAM, 256GB SSD.',price:'€1.099,00',old:'€1.299,00',badge:'−15%',asin:'B0B3C2R8MP',stars:'★★★★★',pro:true,img:'https://m.media-amazon.com/images/I/71vFKBpKakL._AC_SX679_.jpg'},
+  {id:8,  cat:'tech',icon:'📱',title:'Samsung Galaxy S24',desc:'6.2" AMOLED 120Hz, 50MP, 5G.',price:'€699,00',old:'€899,00',badge:'−22%',asin:'B0CQTDB7PC',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/71YDZXS9aGL._AC_SX679_.jpg'},
+  {id:9,  cat:'tech',icon:'⌚',title:'Apple Watch Series 9',desc:'GPS, always-on display, crash detection.',price:'€399,00',old:'€499,00',badge:'−20%',asin:'B0CHX7R6WJ',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/71YGv5PkY6L._AC_SX679_.jpg'},
+  {id:10, cat:'tech',icon:'📷',title:'Sony Alpha ZV-E10',desc:'Mirrorless vlog cam, 4K, APS-C.',price:'€549,00',old:'€749,00',badge:'−26%',asin:'B09BLYXN2G',stars:'★★★★☆',pro:true,img:'https://m.media-amazon.com/images/I/71xHQVNAMTL._AC_SX679_.jpg'},
   {id:61, cat:'tech',icon:'🖨️',title:'Canon PIXMA TS8350a',desc:'All-in-one wireless printer, photo quality.',price:'€79,99',old:'€119,99',badge:'−33%',asin:'B08X6WNQSM',stars:'★★★★☆'},
-  {id:62, cat:'tech',icon:'🔌',title:'Anker 735 GaN Charger 65W',desc:'3-port, folds flat, laptop charging.',price:'€35,99',old:'€55,99',badge:'−36%',asin:'B09W2PNKZH',stars:'★★★★★'},
-  {id:63, cat:'tech',icon:'📺',title:'LG 55" OLED C3 TV',desc:'4K OLED, 120Hz, Dolby Vision.',price:'€999,00',old:'€1.499,00',badge:'−33%',asin:'B0BVX4F5HJ',stars:'★★★★★',pro:true},
-  {id:64, cat:'tech',icon:'🔊',title:'Sonos Era 100',desc:'Stereo sound, Bluetooth + WiFi.',price:'€199,00',old:'€269,00',badge:'−26%',asin:'B0BXY3ZXK8',stars:'★★★★☆'},
-  {id:65, cat:'tech',icon:'🖥️',title:'Dell UltraSharp 27" 4K Monitor',desc:'IPS, USB-C 90W, factory calibrated.',price:'€499,00',old:'€699,00',badge:'−28%',asin:'B08VFJ4KDM',stars:'★★★★★'},
-  {id:66, cat:'tech',icon:'🎙️',title:'Blue Yeti USB Microphone',desc:'Professional multi-pattern, plug & play.',price:'€89,99',old:'€129,99',badge:'−30%',asin:'B002VA464S',stars:'★★★★★'},
+  {id:62, cat:'tech',icon:'🔌',title:'Anker 735 GaN Charger 65W',desc:'3-port, folds flat, laptop charging.',price:'€35,99',old:'€55,99',badge:'−36%',asin:'B09W2PNKZH',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/61n9iFY8MyL._AC_SX679_.jpg'},
+  {id:63, cat:'tech',icon:'📺',title:'LG 55" OLED C3 TV',desc:'4K OLED, 120Hz, Dolby Vision.',price:'€999,00',old:'€1.499,00',badge:'−33%',asin:'B0BVX4F5HJ',stars:'★★★★★',pro:true,img:'https://m.media-amazon.com/images/I/71piiGMNavL._AC_SX679_.jpg'},
+  {id:64, cat:'tech',icon:'🔊',title:'Sonos Era 100',desc:'Stereo sound, Bluetooth + WiFi.',price:'€199,00',old:'€269,00',badge:'−26%',asin:'B0BXY3ZXK8',stars:'★★★★☆',img:'https://m.media-amazon.com/images/I/51L7BoGCLeL._AC_SX679_.jpg'},
+  {id:65, cat:'tech',icon:'🖥️',title:'Dell UltraSharp 27" 4K Monitor',desc:'IPS, USB-C 90W, factory calibrated.',price:'€499,00',old:'€699,00',badge:'−28%',asin:'B08VFJ4KDM',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/61RG9QNWNSL._AC_SX679_.jpg'},
+  {id:66, cat:'tech',icon:'🎙️',title:'Blue Yeti USB Microphone',desc:'Professional multi-pattern, plug & play.',price:'€89,99',old:'€129,99',badge:'−30%',asin:'B002VA464S',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/61BV8jIzblL._AC_SX679_.jpg'},
   {id:67, cat:'tech',icon:'📡',title:'TP-Link WiFi 6 Router AX3000',desc:'Dual band, MU-MIMO, 40% faster WiFi.',price:'€59,99',old:'€89,99',badge:'−33%',asin:'B08H95NCK6',stars:'★★★★☆'},
-  {id:68, cat:'tech',icon:'💾',title:'Samsung 1TB T7 SSD',desc:'Portable, 1050MB/s, USB-C, shock proof.',price:'€79,99',old:'€119,99',badge:'−33%',asin:'B0874YJP92',stars:'★★★★★'},
-  {id:69, cat:'tech',icon:'🖱️',title:'Logitech MX Master 3S Mouse',desc:'8K DPI, silent clicks, USB-C charge.',price:'€89,99',old:'€119,99',badge:'−25%',asin:'B09HM94VDS',stars:'★★★★★'},
-  {id:70, cat:'tech',icon:'🎮',title:'Meta Quest 3 128GB',desc:'Mixed reality headset, 4K display.',price:'€499,99',old:'€599,99',badge:'−17%',asin:'B0C7JPJSQ8',stars:'★★★★★',pro:true},
+  {id:68, cat:'tech',icon:'💾',title:'Samsung 1TB T7 SSD',desc:'Portable, 1050MB/s, USB-C, shock proof.',price:'€79,99',old:'€119,99',badge:'−33%',asin:'B0874YJP92',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/71mRjOHrLUL._AC_SX679_.jpg'},
+  {id:69, cat:'tech',icon:'🖱️',title:'Logitech MX Master 3S Mouse',desc:'8K DPI, silent clicks, USB-C charge.',price:'€89,99',old:'€119,99',badge:'−25%',asin:'B09HM94VDS',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/61ni6AsmoAL._AC_SX679_.jpg'},
+  {id:70, cat:'tech',icon:'🎮',title:'Meta Quest 3 128GB',desc:'Mixed reality headset, 4K display.',price:'€499,99',old:'€599,99',badge:'−17%',asin:'B0C7JPJSQ8',stars:'★★★★★',pro:true,img:'https://m.media-amazon.com/images/I/61sRoKqwKSL._AC_SX679_.jpg'},
 
   // ===== GAMING (15) =====
-  {id:11, cat:'gaming',icon:'🎮',title:'PlayStation 5 Slim',desc:'PS5 Slim disc edition, next-gen.',price:'€449,99',old:'€549,99',badge:'−18%',asin:'B0CL5KNB9M',stars:'★★★★★',pro:true},
-  {id:12, cat:'gaming',icon:'🖥️',title:'Samsung Odyssey G5 27"',desc:'QHD 165Hz curved, 1ms response.',price:'€199,00',old:'€299,00',badge:'−33%',asin:'B08F9XB3LW',stars:'★★★★☆'},
-  {id:13, cat:'gaming',icon:'🖱️',title:'Logitech G502 HERO Mouse',desc:'25K DPI, 11 buttons, RGB.',price:'€39,99',old:'€69,99',badge:'−43%',asin:'B07GBZ4Q68',stars:'★★★★★'},
-  {id:14, cat:'gaming',icon:'🎙️',title:'HyperX Cloud Alpha',desc:'Dual chamber drivers, detachable mic.',price:'€59,99',old:'€99,99',badge:'−40%',asin:'B074NBSF9N',stars:'★★★★★'},
-  {id:71, cat:'gaming',icon:'🃏',title:'Nintendo Switch OLED',desc:'7" OLED screen, 64GB storage.',price:'€309,99',old:'€349,99',badge:'−11%',asin:'B098RL6SBB',stars:'★★★★★',pro:true},
-  {id:72, cat:'gaming',icon:'⌨️',title:'Corsair K70 RGB Pro',desc:'Cherry MX, aluminium frame, macros.',price:'€89,99',old:'€139,99',badge:'−36%',asin:'B09MVKBYPT',stars:'★★★★☆'},
-  {id:73, cat:'gaming',icon:'🎯',title:'Razer DeathAdder V3',desc:'Ultra-light 63g, 30K DPI sensor.',price:'€49,99',old:'€79,99',badge:'−37%',asin:'B0B7BHVJJ8',stars:'★★★★★'},
-  {id:74, cat:'gaming',icon:'🕹️',title:'Xbox Wireless Controller',desc:'Textured grip, Bluetooth, PC ready.',price:'€49,99',old:'€64,99',badge:'−23%',asin:'B0BRDKDFGX',stars:'★★★★☆'},
+  {id:11, cat:'gaming',icon:'🎮',title:'PlayStation 5 Slim',desc:'PS5 Slim disc edition, next-gen.',price:'€449,99',old:'€549,99',badge:'−18%',asin:'B0CL5KNB9M',stars:'★★★★★',pro:true,img:'https://m.media-amazon.com/images/I/51bNGEJkPQL._AC_SX679_.jpg'},
+  {id:12, cat:'gaming',icon:'🖥️',title:'Samsung Odyssey G5 27"',desc:'QHD 165Hz curved, 1ms response.',price:'€199,00',old:'€299,00',badge:'−33%',asin:'B08F9XB3LW',stars:'★★★★☆',img:'https://m.media-amazon.com/images/I/81pbiRoHPEL._AC_SX679_.jpg'},
+  {id:13, cat:'gaming',icon:'🖱️',title:'Logitech G502 HERO Mouse',desc:'25K DPI, 11 buttons, RGB.',price:'€39,99',old:'€69,99',badge:'−43%',asin:'B07GBZ4Q68',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/61mpMH5TzkL._AC_SX679_.jpg'},
+  {id:14, cat:'gaming',icon:'🎙️',title:'HyperX Cloud Alpha',desc:'Dual chamber drivers, detachable mic.',price:'€59,99',old:'€99,99',badge:'−40%',asin:'B074NBSF9N',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/61oKJQFN7sL._AC_SX679_.jpg'},
+  {id:71, cat:'gaming',icon:'🃏',title:'Nintendo Switch OLED',desc:'7" OLED screen, 64GB storage.',price:'€309,99',old:'€349,99',badge:'−11%',asin:'B098RL6SBB',stars:'★★★★★',pro:true,img:'https://m.media-amazon.com/images/I/61-PblYntsL._AC_SX679_.jpg'},
+  {id:72, cat:'gaming',icon:'⌨️',title:'Corsair K70 RGB Pro',desc:'Cherry MX, aluminium frame, macros.',price:'€89,99',old:'€139,99',badge:'−36%',asin:'B09MVKBYPT',stars:'★★★★☆',img:'https://m.media-amazon.com/images/I/71zUbGGNFhL._AC_SX679_.jpg'},
+  {id:73, cat:'gaming',icon:'🎯',title:'Razer DeathAdder V3',desc:'Ultra-light 63g, 30K DPI sensor.',price:'€49,99',old:'€79,99',badge:'−37%',asin:'B0B7BHVJJ8',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/61jdpDR0oFL._AC_SX679_.jpg'},
+  {id:74, cat:'gaming',icon:'🕹️',title:'Xbox Wireless Controller',desc:'Textured grip, Bluetooth, PC ready.',price:'€49,99',old:'€64,99',badge:'−23%',asin:'B0BRDKDFGX',stars:'★★★★☆',img:'https://m.media-amazon.com/images/I/619dBd7-g8L._AC_SX679_.jpg'},
   {id:75, cat:'gaming',icon:'🎧',title:'Astro A40 TR Headset',desc:'Pro gaming headset, swappable mic.',price:'€79,99',old:'€149,99',badge:'−46%',asin:'B07H3SLKPF',stars:'★★★★☆'},
   {id:76, cat:'gaming',icon:'💺',title:'noblechairs HERO Chair',desc:'Ergonomic gaming chair, lumbar support.',price:'€329,00',old:'€449,00',badge:'−26%',asin:'B08P18Y7C9',stars:'★★★★★',pro:true},
-  {id:77, cat:'gaming',icon:'🎮',title:'Xbox Series X Console',desc:'4K gaming, 1TB SSD, Game Pass ready.',price:'€449,99',old:'€499,99',badge:'−10%',asin:'B08H93ZRK9',stars:'★★★★★',pro:true},
+  {id:77, cat:'gaming',icon:'🎮',title:'Xbox Series X Console',desc:'4K gaming, 1TB SSD, Game Pass ready.',price:'€449,99',old:'€499,99',badge:'−10%',asin:'B08H93ZRK9',stars:'★★★★★',pro:true,img:'https://m.media-amazon.com/images/I/61wwnBSDRCL._AC_SX679_.jpg'},
   {id:78, cat:'gaming',icon:'🖥️',title:'ASUS ROG Swift 32" 4K',desc:'4K 144Hz, HDMI 2.1, G-Sync Ultimate.',price:'€699,00',old:'€999,00',badge:'−30%',asin:'B09NG2JWJ4',stars:'★★★★★'},
   {id:79, cat:'gaming',icon:'🔋',title:'Anker PowerCore 20000 mAh',desc:'Charge phone 5x, dual USB-A + C.',price:'€34,99',old:'€49,99',badge:'−30%',asin:'B01JIWQPMW',stars:'★★★★★'},
   {id:80, cat:'gaming',icon:'📀',title:'The Last of Us Part I – PC',desc:'Award-winning story, stunning visuals.',price:'€29,99',old:'€59,99',badge:'−50%',asin:'B0BWWQNGF9',stars:'★★★★☆'},
-  {id:85, cat:'gaming',icon:'🎵',title:'Elgato Stream Deck MK.2',desc:'15 LCD keys, 1-tap streaming control.',price:'€119,99',old:'€159,99',badge:'−25%',asin:'B09738CV2G',stars:'★★★★★'},
+  {id:85, cat:'gaming',icon:'🎵',title:'Elgato Stream Deck MK.2',desc:'15 LCD keys, 1-tap streaming control.',price:'€119,99',old:'€159,99',badge:'−25%',asin:'B09738CV2G',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/61E2vqAsMqL._AC_SX679_.jpg'},
 
   // ===== HOME (15) =====
   {id:15, cat:'home',icon:'☕',title:'De\'Longhi Magnifica Evo',desc:'Bean-to-cup, 3 cup sizes, auto milk.',price:'€429,00',old:'€599,00',badge:'−28%',asin:'B003YLJPHS',stars:'★★★★★',pro:true},
-  {id:16, cat:'home',icon:'🧹',title:'Dyson V12 Detect Slim',desc:'Laser dust detection, HEPA, 40min.',price:'€449,00',old:'€599,99',badge:'−25%',asin:'B08TT2L3FD',stars:'★★★★☆'},
-  {id:17, cat:'home',icon:'💡',title:'Philips Hue Starter Kit',desc:'3 smart bulbs + Bridge, 16M colours.',price:'€99,99',old:'€149,99',badge:'−33%',asin:'B016151IRQ',stars:'★★★★★'},
-  {id:18, cat:'home',icon:'🌡️',title:'Nest Learning Thermostat',desc:'Smart thermostat, auto schedule.',price:'€199,00',old:'€249,00',badge:'−20%',asin:'B0131RG6VK',stars:'★★★★☆'},
-  {id:81, cat:'home',icon:'🍳',title:'Instant Pot Duo 7-in-1',desc:'Pressure + slow + rice cooker, 5.7L.',price:'€79,99',old:'€119,99',badge:'−33%',asin:'B07BHXW8DC',stars:'★★★★★'},
+  {id:16, cat:'home',icon:'🧹',title:'Dyson V12 Detect Slim',desc:'Laser dust detection, HEPA, 40min.',price:'€449,00',old:'€599,99',badge:'−25%',asin:'B08TT2L3FD',stars:'★★★★☆',img:'https://m.media-amazon.com/images/I/71Pp54XYATL._AC_SX679_.jpg'},
+  {id:17, cat:'home',icon:'💡',title:'Philips Hue Starter Kit',desc:'3 smart bulbs + Bridge, 16M colours.',price:'€99,99',old:'€149,99',badge:'−33%',asin:'B016151IRQ',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/61qrRNZMQhL._AC_SX679_.jpg'},
+  {id:18, cat:'home',icon:'🌡️',title:'Nest Learning Thermostat',desc:'Smart thermostat, auto schedule.',price:'€199,00',old:'€249,00',badge:'−20%',asin:'B0131RG6VK',stars:'★★★★☆',img:'https://m.media-amazon.com/images/I/71YFpIJoxTL._AC_SX679_.jpg'},
+  {id:81, cat:'home',icon:'🍳',title:'Instant Pot Duo 7-in-1',desc:'Pressure + slow + rice cooker, 5.7L.',price:'€79,99',old:'€119,99',badge:'−33%',asin:'B07BHXW8DC',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/71V4HcBcmrL._AC_SX679_.jpg'},
   {id:82, cat:'home',icon:'🌀',title:'Braun Series 9 Pro Shaver',desc:'5 blades, AutoSense, 60min cordless.',price:'€149,99',old:'€249,99',badge:'−40%',asin:'B09LGVSRG5',stars:'★★★★★',pro:true},
   {id:83, cat:'home',icon:'🧺',title:'Bosch Serie 6 Washing Machine',desc:'9kg, 1400rpm, EcoSilence, A rating.',price:'€549,00',old:'€799,00',badge:'−31%',asin:'B09NX8Z8Y1',stars:'★★★★☆'},
-  {id:84, cat:'home',icon:'🪴',title:'Meross Smart Plug 4-Pack',desc:'WiFi, energy monitor, Alexa & Google.',price:'€27,99',old:'€44,99',badge:'−37%',asin:'B08F5N3S9J',stars:'★★★★☆'},
+  {id:84, cat:'home',icon:'🪴',title:'Meross Smart Plug 4-Pack',desc:'WiFi, energy monitor, Alexa & Google.',price:'€27,99',old:'€44,99',badge:'−37%',asin:'B08F5N3S9J',stars:'★★★★☆',img:'https://m.media-amazon.com/images/I/71wYKCCVYSL._AC_SX679_.jpg'},
   {id:86, cat:'home',icon:'🍽️',title:'Bosch Series 6 Dishwasher',desc:'13 place settings, A rating, 44dB quiet.',price:'€599,00',old:'€849,00',badge:'−29%',asin:'B09V4KCXZB',stars:'★★★★★'},
   {id:87, cat:'home',icon:'🌬️',title:'Dyson Pure Hot+Cool Fan',desc:'Air purifier + heater + fan in one.',price:'€399,00',old:'€549,00',badge:'−27%',asin:'B08WCG8JVK',stars:'★★★★☆',pro:true},
   {id:88, cat:'home',icon:'🪟',title:'Philips 3200 Series Air Fryer',desc:'7L XXL, Rapid Air, touchscreen.',price:'€89,99',old:'€139,99',badge:'−35%',asin:'B09V1CPCFM',stars:'★★★★★'},
@@ -539,12 +800,12 @@ const ALL_PRODUCTS = [
 
   // ===== FASHION (15) =====
   {id:19, cat:'fashion',icon:'👟',title:'Nike Air Max 270',desc:'Max air cushioning, many colours.',price:'€89,95',old:'€139,95',badge:'−35%',asin:'B07D3MN18M',stars:'★★★★☆'},
-  {id:20, cat:'fashion',icon:'🕶️',title:'Ray-Ban Wayfarer Classic',desc:'UV400 protection, iconic frame.',price:'€99,00',old:'€149,00',badge:'−33%',asin:'B001O8SRKY',stars:'★★★★★'},
-  {id:21, cat:'fashion',icon:'🎒',title:'Osprey Farpoint 40L',desc:'Travel backpack, carry-on size.',price:'€129,00',old:'€169,00',badge:'−23%',asin:'B0114JGSLQ',stars:'★★★★★'},
+  {id:20, cat:'fashion',icon:'🕶️',title:'Ray-Ban Wayfarer Classic',desc:'UV400 protection, iconic frame.',price:'€99,00',old:'€149,00',badge:'−33%',asin:'B001O8SRKY',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/61HdPFpXJ4L._AC_SX679_.jpg'},
+  {id:21, cat:'fashion',icon:'🎒',title:'Osprey Farpoint 40L',desc:'Travel backpack, carry-on size.',price:'€129,00',old:'€169,00',badge:'−23%',asin:'B0114JGSLQ',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/81gv9MoJeiL._AC_SX679_.jpg'},
   {id:91, cat:'fashion',icon:'👕',title:'Levi\'s 501 Original Jeans',desc:'Straight fit, button fly, 100% cotton.',price:'€49,95',old:'€79,95',badge:'−37%',asin:'B000IUQEVK',stars:'★★★★☆'},
   {id:92, cat:'fashion',icon:'🧤',title:'The North Face Etip Gloves',desc:'Touchscreen-compatible, recycled.',price:'€34,99',old:'€54,99',badge:'−36%',asin:'B07JNHGMYY',stars:'★★★★☆'},
   {id:93, cat:'fashion',icon:'🧢',title:'New Era 59FIFTY Cap',desc:'Flat brim, embroidered logo, wool.',price:'€29,99',old:'€44,99',badge:'−33%',asin:'B00GJ0JN5E',stars:'★★★★★'},
-  {id:94, cat:'fashion',icon:'👠',title:'Birkenstock Arizona Sandals',desc:'Two-strap, cork footbed, classic.',price:'€54,95',old:'€79,95',badge:'−31%',asin:'B000W4YB8M',stars:'★★★★★'},
+  {id:94, cat:'fashion',icon:'👠',title:'Birkenstock Arizona Sandals',desc:'Two-strap, cork footbed, classic.',price:'€54,95',old:'€79,95',badge:'−31%',asin:'B000W4YB8M',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/71WKWGqNdDL._AC_SX679_.jpg'},
   {id:97, cat:'fashion',icon:'🧥',title:'Canada Goose Expedition Parka',desc:'Arctic-rated, coyote fur, waterproof.',price:'€749,00',old:'€1.095,00',badge:'−31%',asin:'B086PLCSCB',stars:'★★★★★',pro:true},
   {id:98, cat:'fashion',icon:'👔',title:'Hugo Boss Classic Watch',desc:'Stainless steel, sapphire crystal.',price:'€179,00',old:'€269,00',badge:'−33%',asin:'B07D3T2C9R',stars:'★★★★★'},
   {id:99, cat:'fashion',icon:'💼',title:'Samsonite Spinner 75cm',desc:'4-wheel hardcase, TSA lock, lightweight.',price:'€159,00',old:'€249,00',badge:'−36%',asin:'B01N5OEOQZ',stars:'★★★★☆'},
@@ -555,11 +816,11 @@ const ALL_PRODUCTS = [
   {id:108,cat:'fashion',icon:'🥿',title:'UGG Classic Short Boots',desc:'Sheepskin lining, suede upper.',price:'€159,95',old:'€219,95',badge:'−27%',asin:'B0002TDOOA',stars:'★★★★★'},
 
   // ===== BEAUTY (15) =====
-  {id:22, cat:'beauty',icon:'🪥',title:'Oral-B iO Series 7',desc:'AI pressure sensor, 5 modes, 2-week battery.',price:'€99,99',old:'€179,99',badge:'−44%',asin:'B08BRLTS9N',stars:'★★★★★',pro:true},
-  {id:23, cat:'beauty',icon:'💆',title:'FOREO LUNA 3',desc:'Silicone sonic cleanser, waterproof.',price:'€99,00',old:'€149,00',badge:'−33%',asin:'B07RFLXRGJ',stars:'★★★★☆'},
-  {id:24, cat:'beauty',icon:'✨',title:'Dyson Airwrap Multi-Styler',desc:'Style without heat. 6 attachments.',price:'€399,00',old:'€499,00',badge:'DEAL',asin:'B08FXRGLJW',stars:'★★★★★',pro:true},
-  {id:101,cat:'beauty',icon:'🌿',title:'The Ordinary Hyaluronic Acid',desc:'2% + B5, deep hydration, all skin types.',price:'€8,90',old:'€13,90',badge:'−36%',asin:'B07MVNJQX1',stars:'★★★★★'},
-  {id:102,cat:'beauty',icon:'🧴',title:'CeraVe Moisturising Cream',desc:'252ml, ceramides, 48h hydration.',price:'€12,99',old:'€19,99',badge:'−35%',asin:'B00TTD9BRC',stars:'★★★★★'},
+  {id:22, cat:'beauty',icon:'🪥',title:'Oral-B iO Series 7',desc:'AI pressure sensor, 5 modes, 2-week battery.',price:'€99,99',old:'€179,99',badge:'−44%',asin:'B08BRLTS9N',stars:'★★★★★',pro:true,img:'https://m.media-amazon.com/images/I/61sNpiACFuL._AC_SX679_.jpg'},
+  {id:23, cat:'beauty',icon:'💆',title:'FOREO LUNA 3',desc:'Silicone sonic cleanser, waterproof.',price:'€99,00',old:'€149,00',badge:'−33%',asin:'B07RFLXRGJ',stars:'★★★★☆',img:'https://m.media-amazon.com/images/I/71UVAuC7YRL._AC_SX679_.jpg'},
+  {id:24, cat:'beauty',icon:'✨',title:'Dyson Airwrap Multi-Styler',desc:'Style without heat. 6 attachments.',price:'€399,00',old:'€499,00',badge:'DEAL',asin:'B08FXRGLJW',stars:'★★★★★',pro:true,img:'https://m.media-amazon.com/images/I/51AEf+CylrL._AC_SX679_.jpg'},
+  {id:101,cat:'beauty',icon:'🌿',title:'The Ordinary Hyaluronic Acid',desc:'2% + B5, deep hydration, all skin types.',price:'€8,90',old:'€13,90',badge:'−36%',asin:'B07MVNJQX1',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/51XeqGrgakL._AC_SX679_.jpg'},
+  {id:102,cat:'beauty',icon:'🧴',title:'CeraVe Moisturising Cream',desc:'252ml, ceramides, 48h hydration.',price:'€12,99',old:'€19,99',badge:'−35%',asin:'B00TTD9BRC',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/71NFOM3YTSL._AC_SX679_.jpg'},
   {id:103,cat:'beauty',icon:'💄',title:'Maybelline Fit Me Foundation',desc:'30ml, natural finish, 40 shades.',price:'€9,99',old:'€14,99',badge:'−33%',asin:'B00H8H9X1E',stars:'★★★★☆'},
   {id:104,cat:'beauty',icon:'🪒',title:'Gillette Fusion5 ProGlide',desc:'5-blade + 8 refills, Flexball handle.',price:'€24,99',old:'€39,99',badge:'−37%',asin:'B004AHXV2O',stars:'★★★★☆'},
   {id:115,cat:'beauty',icon:'💅',title:'OPI Nail Polish Set 12x',desc:'Long-lasting, chip-resistant, salon finish.',price:'€34,99',old:'€59,99',badge:'−41%',asin:'B00164XCDO',stars:'★★★★★'},
@@ -572,13 +833,13 @@ const ALL_PRODUCTS = [
   {id:122,cat:'beauty',icon:'🧖',title:'Clinique Moisture Surge 125ml',desc:'72hr auto-replenishing hydration gel.',price:'€34,99',old:'€54,99',badge:'−36%',asin:'B000URZHBA',stars:'★★★★★'},
 
   // ===== BOOKS (15) =====
-  {id:25, cat:'books',icon:'📘',title:'Atomic Habits – James Clear',desc:'#1 NYT bestseller, build better habits.',price:'€14,99',old:'€22,00',badge:'TIPP',asin:'B01N5AX61W',stars:'★★★★★'},
-  {id:26, cat:'books',icon:'📱',title:'Kindle Paperwhite (2023)',desc:'6.8" glare-free, waterproof, 12 weeks.',price:'€149,99',old:'€189,99',badge:'−21%',asin:'B09TMF6742',stars:'★★★★★',pro:true},
+  {id:25, cat:'books',icon:'📘',title:'Atomic Habits – James Clear',desc:'#1 NYT bestseller, build better habits.',price:'€14,99',old:'€22,00',badge:'TIPP',asin:'B01N5AX61W',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/81wgcld4wxL._AC_SX679_.jpg'},
+  {id:26, cat:'books',icon:'📱',title:'Kindle Paperwhite (2023)',desc:'6.8" glare-free, waterproof, 12 weeks.',price:'€149,99',old:'€189,99',badge:'−21%',asin:'B09TMF6742',stars:'★★★★★',pro:true,img:'https://m.media-amazon.com/images/I/71HkFJNPFLL._AC_SX679_.jpg'},
   {id:27, cat:'books',icon:'🎧',title:'Audible 3-Month Gift Card',desc:'Unlimited audiobooks & podcasts.',price:'€44,97',old:'€59,97',badge:'−25%',asin:'B00NB86OYE',stars:'★★★★☆'},
-  {id:111,cat:'books',icon:'📗',title:'The Psychology of Money',desc:'Morgan Housel. Wealth, greed & happiness.',price:'€12,99',old:'€18,00',badge:'TIPP',asin:'B08D9WJ9G8',stars:'★★★★★'},
-  {id:112,cat:'books',icon:'📙',title:'Deep Work – Cal Newport',desc:'Focused success in a distracted world.',price:'€13,99',old:'€19,99',badge:'−30%',asin:'B00X47ZVXM',stars:'★★★★★'},
+  {id:111,cat:'books',icon:'📗',title:'The Psychology of Money',desc:'Morgan Housel. Wealth, greed & happiness.',price:'€12,99',old:'€18,00',badge:'TIPP',asin:'B08D9WJ9G8',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/71g2ednj0JL._AC_SX679_.jpg'},
+  {id:112,cat:'books',icon:'📙',title:'Deep Work – Cal Newport',desc:'Focused success in a distracted world.',price:'€13,99',old:'€19,99',badge:'−30%',asin:'B00X47ZVXM',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/81YkqyaFVEL._AC_SX679_.jpg'},
   {id:113,cat:'books',icon:'📕',title:'The 4-Hour Work Week',desc:'Ferriss: escape 9-5, live anywhere.',price:'€11,99',old:'€17,99',badge:'−33%',asin:'B002WE46UW',stars:'★★★★☆'},
-  {id:114,cat:'books',icon:'📓',title:'Thinking, Fast and Slow',desc:'Kahneman: how the mind makes decisions.',price:'€13,99',old:'€20,00',badge:'−30%',asin:'B005MJFA2W',stars:'★★★★★'},
+  {id:114,cat:'books',icon:'📓',title:'Thinking, Fast and Slow',desc:'Kahneman: how the mind makes decisions.',price:'€13,99',old:'€20,00',badge:'−30%',asin:'B005MJFA2W',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/71wvKXWoIHL._AC_SX679_.jpg'},
   {id:123,cat:'books',icon:'📒',title:'Rich Dad Poor Dad',desc:'Kiyosaki: what the rich teach their kids.',price:'€10,99',old:'€16,99',badge:'−35%',asin:'B07C7M8SX9',stars:'★★★★☆'},
   {id:124,cat:'books',icon:'📔',title:'Sapiens – Yuval Harari',desc:'A brief history of humankind.',price:'€11,99',old:'€17,99',badge:'−33%',asin:'B00ICN066A',stars:'★★★★★'},
   {id:125,cat:'books',icon:'📚',title:'The Lean Startup',desc:'Eric Ries: build, measure, learn.',price:'€12,99',old:'€18,99',badge:'−31%',asin:'B004J4XGN6',stars:'★★★★☆'},
@@ -586,13 +847,362 @@ const ALL_PRODUCTS = [
   {id:127,cat:'books',icon:'🔖',title:'The Subtle Art of Not Giving',desc:'Mark Manson. A counterintuitive approach.',price:'€10,99',old:'€15,99',badge:'−31%',asin:'B019MMUA8S',stars:'★★★★☆'},
   {id:128,cat:'books',icon:'📜',title:'Good to Great – Jim Collins',desc:'Why some companies make the leap.',price:'€13,99',old:'€20,00',badge:'−30%',asin:'B0058DRUV6',stars:'★★★★★'},
   {id:129,cat:'books',icon:'🗒️',title:'Educated – Tara Westover',desc:'A memoir. Courage to choose your own path.',price:'€11,99',old:'€17,99',badge:'−33%',asin:'B072BLVM83',stars:'★★★★★'},
-  {id:130,cat:'books',icon:'📋',title:'Elon Musk – Walter Isaacson',desc:'The definitive biography of Elon Musk.',price:'€16,99',old:'€26,00',badge:'−34%',asin:'B0BW9GNCM3',stars:'★★★★★'},
+  {id:130,cat:'books',icon:'📋',title:'Elon Musk – Walter Isaacson',desc:'The definitive biography of Elon Musk.',price:'€16,99',old:'€26,00',badge:'−34%',asin:'B0BW9GNCM3',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/71nFkZd0n3L._AC_SX679_.jpg'},
+
+  // ===== TOYS (12) =====
+  {id:200,cat:'toys',icon:'🧸',title:'LEGO Technic Bugatti Chiron',desc:'3,599 pieces, 1:8 scale, working gearbox.',price:'€349,99',old:'€449,99',badge:'−22%',asin:'B071ZGLL9Z',stars:'★★★★★',pro:true,img:'https://m.media-amazon.com/images/I/91+L9PnpWkL._AC_SX679_.jpg'},
+  {id:201,cat:'toys',icon:'🚀',title:'LEGO Icons NASA Artemis',desc:'1,010 pieces, detailed rocket model.',price:'€99,99',old:'€139,99',badge:'−28%',asin:'B0BHYWKD9K',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/81IHFv5vwlL._AC_SX679_.jpg'},
+  {id:202,cat:'toys',icon:'🎨',title:'Crayola Ultimate Art Case',desc:'140 pieces, crayons, markers, pencils.',price:'€24,99',old:'€39,99',badge:'−37%',asin:'B00004UBI2',stars:'★★★★★'},
+  {id:203,cat:'toys',icon:'🎲',title:'Monopoly Classic Board Game',desc:'The iconic property trading game.',price:'€22,99',old:'€34,99',badge:'−34%',asin:'B00CV5PN5G',stars:'★★★★☆',img:'https://m.media-amazon.com/images/I/91GBXFRFxYL._AC_SX679_.jpg'},
+  {id:204,cat:'toys',icon:'🪀',title:'Nerf Elite 2.0 Commander',desc:'6-dart blaster, flip clip, 12 darts.',price:'€19,99',old:'€29,99',badge:'−33%',asin:'B08H95XVMB',stars:'★★★★☆'},
+  {id:205,cat:'toys',icon:'🤖',title:'Sphero Mini Robot Ball',desc:'App-controlled, STEM coding, LED.',price:'€44,99',old:'€69,99',badge:'−35%',asin:'B07BMJ312Z',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/71cRIbzPfuL._AC_SX679_.jpg'},
+  {id:206,cat:'toys',icon:'🎮',title:'Osmo Genius Starter Kit',desc:'iPad learning games, tangible play.',price:'€59,99',old:'€89,99',badge:'−33%',asin:'B01N32QLCK',stars:'★★★★★'},
+  {id:207,cat:'toys',icon:'🧩',title:'Ravensburger 1000pc Puzzle',desc:'Disney collage, premium quality.',price:'€14,99',old:'€22,99',badge:'−34%',asin:'B00000JCHM',stars:'★★★★☆'},
+  {id:208,cat:'toys',icon:'🪁',title:'Hot Wheels Ultimate Garage',desc:'140cm tall, 2 cars included, loops.',price:'€79,99',old:'€119,99',badge:'−33%',asin:'B09BJYK1J8',stars:'★★★★★'},
+  {id:209,cat:'toys',icon:'🎭',title:'Playmobil City Police Station',desc:'Over 200 pieces, figures included.',price:'€49,99',old:'€74,99',badge:'−33%',asin:'B08F39XCJ9',stars:'★★★★☆'},
+  {id:210,cat:'toys',icon:'🧱',title:'LEGO Star Wars Millennium Falcon',desc:'7,541 pieces, ultimate collector set.',price:'€799,99',old:'€999,99',badge:'−20%',asin:'B074B59XF8',stars:'★★★★★',pro:true},
+  {id:211,cat:'toys',icon:'🎯',title:'Hasbro Jenga Classic Game',desc:'54 hardwood blocks, stacking fun.',price:'€12,99',old:'€19,99',badge:'−35%',asin:'B00000DMBB',stars:'★★★★★'},
+
+  // ===== FOOD & DRINK (12) =====
+  {id:220,cat:'food',icon:'☕',title:'Nespresso Vertuo Pop Bundle',desc:'Coffee machine + 12 capsules, compact.',price:'€79,99',old:'€119,99',badge:'−33%',asin:'B09Y5DXKLK',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/51KhI6wljHL._AC_SX679_.jpg'},
+  {id:221,cat:'food',icon:'🍫',title:'Lindt LINDOR Assorted Box 337g',desc:'Smooth filling truffles, gift box.',price:'€14,99',old:'€22,99',badge:'−34%',asin:'B00PJKVCB0',stars:'★★★★★'},
+  {id:222,cat:'food',icon:'🫖',title:'Twinings Variety Tea Box 120',desc:'120 bags, 12 varieties, gift tin.',price:'€16,99',old:'€24,99',badge:'−32%',asin:'B002KKPFCW',stars:'★★★★★'},
+  {id:223,cat:'food',icon:'🫙',title:'Vitamix E310 Blender',desc:'10-speed variable, self-cleaning, 1.4L.',price:'€349,00',old:'€499,00',badge:'−30%',asin:'B00ZG4JPZ0',stars:'★★★★★',pro:true},
+  {id:224,cat:'food',icon:'🌶️',title:'Tabasco Variety Gift Set 6x',desc:'6 sauce varieties, collector tin.',price:'€18,99',old:'€29,99',badge:'−36%',asin:'B000WR7RQU',stars:'★★★★★'},
+  {id:225,cat:'food',icon:'🫘',title:'Lavazza Super Crema 1kg',desc:'Espresso blend, medium roast, whole bean.',price:'€14,99',old:'€22,99',badge:'−34%',asin:'B001315TRS',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/81bB0DQDZZL._AC_SX679_.jpg'},
+  {id:226,cat:'food',icon:'🍷',title:'Wine Advent Calendar 24x',desc:'24 mini bottles, red & white mix.',price:'€49,99',old:'€79,99',badge:'−37%',asin:'B09HGSL3T7',stars:'★★★★☆'},
+  {id:227,cat:'food',icon:'🧇',title:'Philips Airfryer XXL 7.3L',desc:'7.3L, digital, Fat Removal Technology.',price:'€149,99',old:'€219,99',badge:'−31%',asin:'B08J4XL2VG',stars:'★★★★★'},
+  {id:228,cat:'food',icon:'🍕',title:'Ooni Karu 12 Pizza Oven',desc:'Multi-fuel outdoor oven, 500°C max.',price:'€299,00',old:'€399,00',badge:'−25%',asin:'B08NYQ73MK',stars:'★★★★★',pro:true,img:'https://m.media-amazon.com/images/I/71oNM7UoLWL._AC_SX679_.jpg'},
+  {id:229,cat:'food',icon:'🥃',title:'Whisky Tasting Set 5x50ml',desc:'5 premium malts, nosing glasses.',price:'€34,99',old:'€54,99',badge:'−36%',asin:'B07Q4D3RMN',stars:'★★★★☆'},
+  {id:230,cat:'food',icon:'🫗',title:'SodaStream Terra Starter Kit',desc:'Sparkling water maker, 2 bottles.',price:'€69,99',old:'€99,99',badge:'−30%',asin:'B09LGWQ3DL',stars:'★★★★★'},
+  {id:231,cat:'food',icon:'🍯',title:'Manuka Health MGO 400+ Honey',desc:'250g, certified MGO, New Zealand.',price:'€29,99',old:'€44,99',badge:'−33%',asin:'B004KXIQEI',stars:'★★★★★'},
+
+  // ===== TRAVEL (12) =====
+  {id:240,cat:'travel',icon:'🧳',title:'Samsonite Cosmolite 75cm',desc:'Lightest hardcase ever, 4-wheel spinner.',price:'€299,00',old:'€429,00',badge:'−30%',asin:'B00M65JQZQ',stars:'★★★★★',pro:true},
+  {id:241,cat:'travel',icon:'🔒',title:'Pacsafe Travelsafe 5L Bag',desc:'Anti-theft, slash-proof, TSA lock.',price:'€49,99',old:'€74,99',badge:'−33%',asin:'B00DY36LGK',stars:'★★★★★'},
+  {id:242,cat:'travel',icon:'🌍',title:'Lonely Planet Europe Guide',desc:'Best of Europe, 2024 edition.',price:'€19,99',old:'€29,99',badge:'−33%',asin:'B09V3S8X52',stars:'★★★★☆'},
+  {id:243,cat:'travel',icon:'🎒',title:'Deuter Aircontact 65+10L',desc:'Trekking backpack, Aircontact system.',price:'€149,95',old:'€199,95',badge:'−25%',asin:'B07P3HRBT1',stars:'★★★★★'},
+  {id:244,cat:'travel',icon:'💊',title:'Heys Travel Pillow Memory Foam',desc:'Ergonomic neck pillow, washable.',price:'€24,99',old:'€39,99',badge:'−37%',asin:'B07G65YGF9',stars:'★★★★☆'},
+  {id:245,cat:'travel',icon:'🔌',title:'BESTEK Universal Travel Adapter',desc:'220 countries, 4 USB ports, safety.',price:'€19,99',old:'€32,99',badge:'−39%',asin:'B00GWDLJGS',stars:'★★★★★'},
+  {id:246,cat:'travel',icon:'📷',title:'GoPro HERO12 Black',desc:'5.3K video, HyperSmooth, waterproof.',price:'€299,00',old:'€399,00',badge:'−25%',asin:'B0CDFG3FK5',stars:'★★★★★',pro:true},
+  {id:247,cat:'travel',icon:'🗺️',title:'Garmin inReach Mini 2',desc:'Satellite communicator, SOS button.',price:'€349,99',old:'€449,99',badge:'−22%',asin:'B09G3HFMT9',stars:'★★★★★'},
+  {id:248,cat:'travel',icon:'🧴',title:'Osprey Daylite 13L Daypack',desc:'Lightweight, breathable, fits A4.',price:'€49,95',old:'€69,95',badge:'−28%',asin:'B07P4VXD7H',stars:'★★★★★'},
+  {id:249,cat:'travel',icon:'🏕️',title:'MSR PocketRocket 2 Stove',desc:'Ultra-compact camp stove, 73g.',price:'€39,99',old:'€59,99',badge:'−33%',asin:'B000YBFNB4',stars:'★★★★★'},
+  {id:250,cat:'travel',icon:'🌙',title:'Sea to Summit Ultralight Bag',desc:'Down sleeping bag, 550g, -3°C.',price:'€149,95',old:'€219,95',badge:'−31%',asin:'B079P6HDWH',stars:'★★★★★'},
+  {id:251,cat:'travel',icon:'🧭',title:'Suunto 9 Peak Pro Watch',desc:'GPS, 300h battery, sapphire glass.',price:'€399,00',old:'€549,00',badge:'−27%',asin:'B09VTFGB6D',stars:'★★★★★',pro:true},
+
+  // ===== PETS (12) =====
+  {id:260,cat:'pets',icon:'🐕',title:'Furbo 360° Dog Camera',desc:'Treat tossing, bark alert, HD video.',price:'€149,00',old:'€209,00',badge:'−28%',asin:'B07N7MD6SK',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/71jZFCoA-iL._AC_SX679_.jpg'},
+  {id:261,cat:'pets',icon:'🐱',title:'Catit Pixi Smart Feeder',desc:'App-controlled, 6 meals/day, camera.',price:'€89,99',old:'€129,99',badge:'−30%',asin:'B07BKCHHJL',stars:'★★★★☆'},
+  {id:262,cat:'pets',icon:'🦴',title:'Kong Classic Dog Toy L',desc:'Durable rubber, treat stuffing, fetch.',price:'€12,99',old:'€19,99',badge:'−35%',asin:'B0002AR0II',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/71B8wOhvhnL._AC_SX679_.jpg'},
+  {id:263,cat:'pets',icon:'🐾',title:'Ruffwear Front Range Harness',desc:'Padded, dual leash clip, reflective.',price:'€54,95',old:'€79,95',badge:'−31%',asin:'B00P4R8NNW',stars:'★★★★★'},
+  {id:264,cat:'pets',icon:'🐠',title:'Fluval Flex 57L Aquarium Kit',desc:'Curved glass, LED, filter included.',price:'€179,99',old:'€249,99',badge:'−28%',asin:'B07VCLVDXC',stars:'★★★★★'},
+  {id:265,cat:'pets',icon:'🌿',title:'Royal Canin Maxi Adult 15kg',desc:'Dry food for large breeds, 15kg bag.',price:'€59,99',old:'€84,99',badge:'−29%',asin:'B0791PBLXQ',stars:'★★★★★'},
+  {id:266,cat:'pets',icon:'🧶',title:'PetSafe ScoopFree Self-Cleaning',desc:'Automatic litter box, odor control.',price:'€129,99',old:'€189,99',badge:'−31%',asin:'B07CMFPGJX',stars:'★★★★☆'},
+  {id:267,cat:'pets',icon:'🐶',title:'Whistle GO Explore GPS Tracker',desc:'Real-time GPS, health monitoring.',price:'€69,99',old:'€99,99',badge:'−30%',asin:'B07D3H7WQK',stars:'★★★★★'},
+  {id:268,cat:'pets',icon:'🛏️',title:'Orthopedic Dog Bed XL',desc:'Memory foam, waterproof, washable cover.',price:'€49,99',old:'€79,99',badge:'−37%',asin:'B07H4RZMGM',stars:'★★★★★'},
+  {id:269,cat:'pets',icon:'🪮',title:'Furminator deShedding Tool',desc:'Reduces shedding 90%, stainless blade.',price:'€24,99',old:'€39,99',badge:'−37%',asin:'B0009YD45C',stars:'★★★★★'},
+  {id:270,cat:'pets',icon:'🐇',title:'Savic Rabbit Cage 120cm',desc:'Indoor hutch, 2 levels, pull-out tray.',price:'€89,99',old:'€129,99',badge:'−30%',asin:'B000W3YGDS',stars:'★★★★☆'},
+  {id:271,cat:'pets',icon:'🐦',title:'Trixie Bird Cage 78cm',desc:'Spacious parrot cage, 3 perches.',price:'€74,99',old:'€109,99',badge:'−31%',asin:'B000XL43HS',stars:'★★★★☆'},
+
+  // ===== OFFICE (12) =====
+  {id:280,cat:'office',icon:'🖊️',title:'Moleskine Classic Notebook A5',desc:'Hardcover, ruled, 240 pages, black.',price:'€14,99',old:'€22,99',badge:'−34%',asin:'B00CG5XDNE',stars:'★★★★★'},
+  {id:281,cat:'office',icon:'🖥️',title:'Ergotron LX Desk Mount',desc:'Single monitor arm, full motion, 34".',price:'€109,99',old:'€159,99',badge:'−31%',asin:'B033KKGGB5',stars:'★★★★★'},
+  {id:282,cat:'office',icon:'⌨️',title:'Logitech MX Keys Keyboard',desc:'Backlit, multi-device, USB-C charge.',price:'€99,99',old:'€139,99',badge:'−28%',asin:'B07W6Z5Z64',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/61ni6AsmoAL._AC_SX679_.jpg'},
+  {id:283,cat:'office',icon:'📋',title:'Rocketbook Smart Notebook',desc:'Reusable, cloud connected, A5.',price:'€29,99',old:'€44,99',badge:'−33%',asin:'B06ZXWSL89',stars:'★★★★☆'},
+  {id:284,cat:'office',icon:'💡',title:'BenQ ScreenBar LED Desk Lamp',desc:'Auto-dimming, no glare, USB-C.',price:'€99,00',old:'€139,00',badge:'−28%',asin:'B076VNFZJG',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/51rXNcPd0qL._AC_SX679_.jpg'},
+  {id:285,cat:'office',icon:'🪑',title:'Herman Miller Aeron Chair',desc:'PostureFit SL, 12-year warranty.',price:'€1.199,00',old:'€1.649,00',badge:'−27%',asin:'B01N4YEO4U',stars:'★★★★★',pro:true},
+  {id:286,cat:'office',icon:'📦',title:'Fellowes Shredder Powershred',desc:'12-sheet cross-cut, 30L bin.',price:'€69,99',old:'€99,99',badge:'−30%',asin:'B00425QZDO',stars:'★★★★☆'},
+  {id:287,cat:'office',icon:'🔋',title:'Anker USB Hub 10-Port',desc:'7 USB-A + 3 USB-C, 60W charging.',price:'€39,99',old:'€59,99',badge:'−33%',asin:'B07KHRBBJX',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/71t-PfHhEKL._AC_SX679_.jpg'},
+  {id:288,cat:'office',icon:'📱',title:'Belkin 3-in-1 Wireless Charger',desc:'iPhone + Watch + AirPods, 15W.',price:'€49,99',old:'€79,99',badge:'−37%',asin:'B09G4FSVWP',stars:'★★★★☆'},
+  {id:289,cat:'office',icon:'🗄️',title:'Leitz Click&Store Box Set 5',desc:'5 stackable storage boxes, A4.',price:'€24,99',old:'€39,99',badge:'−37%',asin:'B000NZXKKU',stars:'★★★★★'},
+  {id:290,cat:'office',icon:'🖨️',title:'Brother QL-820NWB Label Printer',desc:'Wireless, Bluetooth, 62mm width.',price:'€89,99',old:'€129,99',badge:'−30%',asin:'B075TBK2W8',stars:'★★★★★'},
+  {id:291,cat:'office',icon:'📐',title:'Wacom Intuos M Drawing Tablet',desc:'Bluetooth, 4 shortcut keys, 2048 levels.',price:'€74,99',old:'€109,99',badge:'−31%',asin:'B079J3D3JM',stars:'★★★★★'},
+
+  // ===== AUTOMOTIVE (12) =====
+  {id:300,cat:'auto',icon:'🚗',title:'Garmin DriveSmart 76 GPS',desc:'7" display, live traffic, Bluetooth.',price:'€149,99',old:'€219,99',badge:'−31%',asin:'B08FB2YWDJ',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/71y3KRXbWlL._AC_SX679_.jpg'},
+  {id:301,cat:'auto',icon:'📷',title:'Vantrue E1 Lite Dash Cam',desc:'1080P front & rear, night vision.',price:'€79,99',old:'€119,99',badge:'−33%',asin:'B09W2N4GBP',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/71P4TvGBBuL._AC_SX679_.jpg'},
+  {id:302,cat:'auto',icon:'🔋',title:'NOCO Boost Plus GB40 Jump Starter',desc:'1000A, 12V, works in -20°C.',price:'€69,99',old:'€99,99',badge:'−30%',asin:'B015TKUPIC',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/61GUYV2N-jL._AC_SX679_.jpg'},
+  {id:303,cat:'auto',icon:'🧽',title:'Meguiars Ultimate Car Wax',desc:'Ultimate liquid wax, 473ml.',price:'€19,99',old:'€29,99',badge:'−33%',asin:'B00IXGTO3S',stars:'★★★★★'},
+  {id:304,cat:'auto',icon:'🛞',title:'Michelin CrossClimate2 205/55R16',desc:'All-season tyre, A-rated wet grip.',price:'€89,99',old:'€129,99',badge:'−30%',asin:'B08PPZMT9S',stars:'★★★★★',pro:true},
+  {id:305,cat:'auto',icon:'🪣',title:'Karcher K4 Pressure Washer',desc:'1800W, 130 bar, 20m hose.',price:'€149,00',old:'€219,00',badge:'−31%',asin:'B09BCHRXY5',stars:'★★★★★'},
+  {id:306,cat:'auto',icon:'📱',title:'iOttie Easy One Touch 5 Mount',desc:'Dashboard & windshield, one-touch.',price:'€24,99',old:'€39,99',badge:'−37%',asin:'B085M8FVFD',stars:'★★★★★'},
+  {id:307,cat:'auto',icon:'🔧',title:'Bosch Car Tool Kit 108pc',desc:'108 pieces, sockets & wrenches.',price:'€49,99',old:'€79,99',badge:'−37%',asin:'B003BTOT5I',stars:'★★★★☆'},
+  {id:308,cat:'auto',icon:'❄️',title:'Bosch S4 Car Battery 74Ah',desc:'580A, maintenance-free, 3yr warranty.',price:'€79,99',old:'€109,99',badge:'−27%',asin:'B000O49WCG',stars:'★★★★★'},
+  {id:309,cat:'auto',icon:'🚦',title:'Thinkware U1000 4K Dash Cam',desc:'4K front, 2K rear, WiFi, GPS.',price:'€249,00',old:'€349,00',badge:'−28%',asin:'B07X6CL8D6',stars:'★★★★★',pro:true},
+  {id:310,cat:'auto',icon:'🪄',title:'Chemical Guys Complete Wash Kit',desc:'10 premium detailing products.',price:'€59,99',old:'€89,99',badge:'−33%',asin:'B01LXKPC0E',stars:'★★★★★'},
+  {id:311,cat:'auto',icon:'🔦',title:'Ring Automotive RAC720 Inflator',desc:'Digital tyre inflator, auto-stop.',price:'€39,99',old:'€59,99',badge:'−33%',asin:'B00CRFAU6O',stars:'★★★★★'},
+
+  // ===== HEALTH (12) =====
+  {id:320,cat:'health',icon:'💊',title:'Vitabiotics Wellman Sport 30',desc:'30 tablets, energy & performance.',price:'€9,99',old:'€14,99',badge:'−33%',asin:'B00B7IB07M',stars:'★★★★★'},
+  {id:321,cat:'health',icon:'🧘',title:'Withings Body+ Smart Scale',desc:'WiFi, body composition, BMI.',price:'€59,95',old:'€89,95',badge:'−33%',asin:'B01N1UX8RW',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/61Ys0BWQJJL._AC_SX679_.jpg'},
+  {id:322,cat:'health',icon:'💉',title:'Omron M500 Blood Pressure Monitor',desc:'Upper arm, clinically validated.',price:'€44,99',old:'€69,99',badge:'−35%',asin:'B07C9DZDJ7',stars:'★★★★★'},
+  {id:323,cat:'health',icon:'🔬',title:'Braun ThermoScan 7 Ear Thermometer',desc:'Age-precision technology, 8 readings.',price:'€49,99',old:'€79,99',badge:'−37%',asin:'B00VTRNJQU',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/61G7OLHHCVL._AC_SX679_.jpg'},
+  {id:324,cat:'health',icon:'🌬️',title:'Beurer Nebuliser NE40',desc:'Mesh nebuliser, rechargeable, quiet.',price:'€49,99',old:'€74,99',badge:'−33%',asin:'B08C9S42GK',stars:'★★★★★'},
+  {id:325,cat:'health',icon:'🦷',title:'Waterpik Aquarius WP-660',desc:'Water flosser, 10 settings, 600ml.',price:'€49,99',old:'€79,99',badge:'−37%',asin:'B00HFQQ0VU',stars:'★★★★★'},
+  {id:326,cat:'health',icon:'💪',title:'Theragun Prime Massage Gun',desc:'5 speeds, 16mm amplitude, quiet.',price:'€199,00',old:'€299,00',badge:'−33%',asin:'B099ZCBF9Q',stars:'★★★★★',pro:true,img:'https://m.media-amazon.com/images/I/61bwJDNUqUL._AC_SX679_.jpg'},
+  {id:327,cat:'health',icon:'😴',title:'Philips SmartSleep Wake-Up Light',desc:'Sunrise simulation, FM radio, app.',price:'€89,99',old:'€129,99',badge:'−30%',asin:'B07BGGH5WM',stars:'★★★★★'},
+  {id:328,cat:'health',icon:'🧴',title:'Optimum Nutrition Gold Standard Whey',desc:'2.27kg, chocolate, 30g protein/serving.',price:'€54,99',old:'€79,99',badge:'−31%',asin:'B000QSNYGI',stars:'★★★★★',img:'https://m.media-amazon.com/images/I/71RKNAp6mLL._AC_SX679_.jpg'},
+  {id:329,cat:'health',icon:'🩺',title:'Beurer PM 80 Pulse Oximeter',desc:'SpO2 & pulse, OLED display, alarm.',price:'€29,99',old:'€44,99',badge:'−33%',asin:'B00GHLT9BS',stars:'★★★★★'},
+  {id:330,cat:'health',icon:'🌿',title:'Holland & Barrett Omega-3 240 caps',desc:'1000mg fish oil, EPA & DHA.',price:'€19,99',old:'€29,99',badge:'−33%',asin:'B07DFRMNZH',stars:'★★★★☆',img:'https://m.media-amazon.com/images/I/71rDiGvvPOL._AC_SX679_.jpg'},
+  {id:331,cat:'health',icon:'🏃',title:'Compex SP 4.0 EMS Machine',desc:'Muscle stimulator, 10 programs.',price:'€199,00',old:'€299,00',badge:'−33%',asin:'B00B2V8KLA',stars:'★★★★★',pro:true},
 ];
 
 // STATE
 let user = null, wishlist = [], currentPayAsin = null, currentCat = 'all';
+let currentSort = 'default', currentPrice = 'all', dotdIndex = 0;
+let priceAlerts = JSON.parse(localStorage.getItem('nd_alerts')||'[]');
+let collections = JSON.parse(localStorage.getItem('nd_collections')||'[]');
+let currentAlertProduct = null;
+
+// PRICE ALERTS ──────────────────────────────────────────────────────────────
+function openAlertModal(productId) {
+  if (!user) { showAuth('login'); showToast('Sign in to set price alerts','🔒'); return; }
+  const p = ALL_PRODUCTS.find(x => x.id === productId);
+  if (!p) return;
+  currentAlertProduct = p;
+  document.getElementById('alertProductName').textContent = p.title + ' · Current: ' + p.price;
+  document.getElementById('alertTargetPrice').value = '';
+  document.getElementById('alertOverlay').classList.add('open');
+}
+
+function saveAlert() {
+  const target = parseFloat(document.getElementById('alertTargetPrice').value);
+  if (!target || target <= 0) { showToast('Please enter a valid price','⚠️'); return; }
+  if (!currentAlertProduct) return;
+  priceAlerts = priceAlerts.filter(a => a.id !== currentAlertProduct.id);
+  priceAlerts.push({ id: currentAlertProduct.id, title: currentAlertProduct.title, target, current: currentAlertProduct.price, asin: currentAlertProduct.asin });
+  localStorage.setItem('nd_alerts', JSON.stringify(priceAlerts));
+  closeOverlay('alertOverlay');
+  showToast('🔔 Alert set for €' + target.toFixed(2) + '!', '');
+  renderAlerts();
+  renderProducts(getCurrentProducts());
+}
+
+function removeAlert(id) {
+  priceAlerts = priceAlerts.filter(a => a.id !== id);
+  localStorage.setItem('nd_alerts', JSON.stringify(priceAlerts));
+  renderAlerts();
+  renderProducts(getCurrentProducts());
+  showToast('Alert removed','🗑️');
+}
+
+function renderAlerts() {
+  const c = document.getElementById('alertsList');
+  if (!c) return;
+  if (!priceAlerts.length) {
+    c.innerHTML = '<div style="text-align:center;padding:28px 0;color:var(--muted)"><div style="font-size:36px;margin-bottom:8px">🔔</div><div>No alerts set yet.<br>Open any deal and click Set Alert.</div></div>';
+    return;
+  }
+  c.innerHTML = priceAlerts.map(a => {
+    const p = ALL_PRODUCTS.find(x => x.id === a.id);
+    const currentNum = parseFloat((p ? p.price : a.current).replace(/[^0-9,]/g,'').replace(',','.'));
+    const triggered = currentNum <= a.target;
+    return '<div class="wish-item' + (triggered ? '" style="border-color:var(--success)' : '') + '">'
+      + '<div class="wish-icon">' + (p ? p.icon : '📦') + '</div>'
+      + '<div class="wish-info"><div class="wish-title">' + a.title + '</div>'
+      + '<div style="font-size:11px;color:var(--muted)">Alert: <strong style="color:' + (triggered?'var(--success)':'var(--accent2)') + '">€' + a.target.toFixed(2) + '</strong> · Now: ' + (p ? p.price : a.current) + (triggered ? ' · ✅ Target reached!' : '') + '</div></div>'
+      + '<button class="wish-rm" onclick="removeAlert(' + a.id + ')">×</button>'
+      + '</div>';
+  }).join('');
+}
+
+function checkAlerts() {
+  const triggered = priceAlerts.filter(a => {
+    const p = ALL_PRODUCTS.find(x => x.id === a.id);
+    if (!p) return false;
+    const cur = parseFloat(p.price.replace(/[^0-9,]/g,'').replace(',','.'));
+    return cur <= a.target;
+  });
+  if (triggered.length) {
+    showToast('🔔 ' + triggered.length + ' price alert(s) triggered!', '');
+  }
+}
+
+// COLLECTIONS ──────────────────────────────────────────────────────────────
+function createCollection() {
+  const name = document.getElementById('newColName').value.trim();
+  if (!name) return;
+  collections.push({ id: Date.now(), name, items: [] });
+  localStorage.setItem('nd_collections', JSON.stringify(collections));
+  document.getElementById('newColName').value = '';
+  renderCollectionsModal();
+  showToast('Collection created: ' + name, '📁');
+}
+
+function createCollectionFromProfile() {
+  const name = document.getElementById('profColName').value.trim();
+  if (!name) return;
+  collections.push({ id: Date.now(), name, items: [] });
+  localStorage.setItem('nd_collections', JSON.stringify(collections));
+  document.getElementById('profColName').value = '';
+  renderProfileCollections();
+  showToast('Collection created: ' + name, '📁');
+}
+
+function deleteCollection(id) {
+  collections = collections.filter(c => c.id !== id);
+  localStorage.setItem('nd_collections', JSON.stringify(collections));
+  renderCollectionsModal();
+  renderProfileCollections();
+}
+
+function addToCollection(colId, productId) {
+  const col = collections.find(c => c.id === colId);
+  const p = ALL_PRODUCTS.find(x => x.id === productId);
+  if (!col || !p) return;
+  if (!col.items.find(i => i.id === productId)) col.items.push({ id: productId, title: p.title, price: p.price, icon: p.icon });
+  localStorage.setItem('nd_collections', JSON.stringify(collections));
+  showToast('Added to ' + col.name + '!', '📁');
+}
+
+function quickAddToCollection(productId) {
+  if (!collections.length) {
+    const name = prompt('Name your first collection:');
+    if (!name) return;
+    collections.push({ id: Date.now(), name, items: [] });
+    localStorage.setItem('nd_collections', JSON.stringify(collections));
+  }
+  if (collections.length === 1) {
+    addToCollection(collections[0].id, productId);
+    return;
+  }
+  // Multiple collections — show picker
+  const names = collections.map((c,i) => i+1+'. '+c.name).join('\n');
+  const choice = prompt('Which collection?\n' + names + '\n\nEnter number:');
+  const idx = parseInt(choice) - 1;
+  if (idx >= 0 && idx < collections.length) addToCollection(collections[idx].id, productId);
+}
+
+function renderCollectionsModal() {
+  const c = document.getElementById('collectionsList');
+  if (!c) return;
+  if (!collections.length) {
+    c.innerHTML = '<div style="text-align:center;padding:24px;color:var(--muted)">No collections yet. Create one above!</div>';
+    return;
+  }
+  c.innerHTML = collections.map(col => '<div class="col-item"><div><div class="col-item-name">📁 ' + col.name + '</div><div class="col-item-count">' + col.items.length + ' item' + (col.items.length !== 1 ? 's' : '') + '</div></div><button class="col-item-del" onclick="deleteCollection(' + col.id + ')">🗑️</button></div>').join('');
+}
+
+function renderProfileCollections() {
+  const c = document.getElementById('profileCollectionsList');
+  if (!c) return;
+  if (!collections.length) {
+    c.innerHTML = '<div style="text-align:center;padding:24px;color:var(--muted);font-size:13px">No collections yet.</div>';
+    return;
+  }
+  c.innerHTML = collections.map(col => '<div class="col-item"><div><div class="col-item-name">📁 ' + col.name + '</div><div class="col-item-count">' + col.items.length + ' item' + (col.items.length !== 1 ? 's' : '') + '</div></div><button class="col-item-del" onclick="deleteCollection(' + col.id + ')">🗑️</button></div>').join('');
+}
+
+// GO PRO ───────────────────────────────────────────────────────────────────
+function goPro(plan) {
+  if (!user) { showAuth('login'); showToast('Sign in first to upgrade','🔒'); return; }
+  const price = plan === 'yearly' ? '€49.99/year' : '€6.99/month';
+  openPayModal('👑', 'NewDeals Pro ' + (plan === 'yearly' ? 'Yearly' : 'Monthly'), price, null);
+}
+
+function activatePro() {
+  if (!user) return;
+  user.isPro = true;
+  const chip = document.querySelector('.plan-chip');
+  if (chip) { chip.className = 'plan-chip chip-pro'; chip.textContent = '👑 Pro Member'; }
+  showToast('👑 Welcome to Pro! All features unlocked.', '');
+  renderProducts(getCurrentProducts());
+}
+
+function getCurrentProducts() {
+  let products = currentCat === 'all' ? [...ALL_PRODUCTS] : ALL_PRODUCTS.filter(p => p.cat === currentCat);
+  if (currentPrice === 'under25') products = products.filter(p => parseFloat(p.price.replace(/[^0-9,]/g,'').replace(',','.')) < 25);
+  else if (currentPrice === '25to100') products = products.filter(p => { const v = parseFloat(p.price.replace(/[^0-9,]/g,'').replace(',','.')); return v >= 25 && v <= 100; });
+  else if (currentPrice === 'over100') products = products.filter(p => parseFloat(p.price.replace(/[^0-9,]/g,'').replace(',','.')) > 100);
+  if (currentSort === 'discount') products.sort((a,b) => { const ga = a.badge && a.badge.includes('%') ? parseInt(a.badge) : 0; const gb = b.badge && b.badge.includes('%') ? parseInt(b.badge) : 0; return ga - gb; });
+  else if (currentSort === 'priceasc') products.sort((a,b) => parseFloat(a.price.replace(/[^0-9,]/g,'').replace(',','.')) - parseFloat(b.price.replace(/[^0-9,]/g,'').replace(',','.')));
+  else if (currentSort === 'pricedesc') products.sort((a,b) => parseFloat(b.price.replace(/[^0-9,]/g,'').replace(',','.')) - parseFloat(a.price.replace(/[^0-9,]/g,'').replace(',','.')));
+  return products;
+}
+
+// PRICE FILTER
+function priceVal(p) {
+  const s = p.price.replace(/[€.,\s]/g,'').replace(',','.');
+  const n = parseFloat(s.replace(/[^0-9]/g,''));
+  return isNaN(n) ? 0 : n / (s.length > 4 ? 100 : 1);
+}
+
+function setPriceFilter(val, btn) {
+  currentPrice = val;
+  document.querySelectorAll('.filter-btn').forEach(b => { if(['all','under25','25to100','over100'].includes(b.getAttribute('onclick').match(/'([^']+)'/)[1])) b.classList.remove('active'); });
+  btn.classList.add('active');
+  applyFilters();
+}
+
+function setSort(val, btn) {
+  currentSort = val;
+  document.querySelectorAll('.filter-btn').forEach(b => { if(['default','discount','priceasc','pricedesc'].includes(b.getAttribute('onclick').match(/'([^']+)'/)[1])) b.classList.remove('active'); });
+  btn.classList.add('active');
+  applyFilters();
+}
+
+function applyFilters() {
+  let products = currentCat === 'all' ? [...ALL_PRODUCTS] : ALL_PRODUCTS.filter(p => p.cat === currentCat);
+  // Price filter
+  if (currentPrice === 'under25') products = products.filter(p => { const v = parseFloat(p.price.replace(/[^0-9,]/g,'').replace(',','.')); return v < 25; });
+  else if (currentPrice === '25to100') products = products.filter(p => { const v = parseFloat(p.price.replace(/[^0-9,]/g,'').replace(',','.')); return v >= 25 && v <= 100; });
+  else if (currentPrice === 'over100') products = products.filter(p => { const v = parseFloat(p.price.replace(/[^0-9,]/g,'').replace(',','.')); return v > 100; });
+  // Sort
+  if (currentSort === 'discount') products.sort((a,b) => { const ga = a.badge && a.badge.includes('%') ? parseInt(a.badge) : 0; const gb = b.badge && b.badge.includes('%') ? parseInt(b.badge) : 0; return ga - gb; });
+  else if (currentSort === 'priceasc') products.sort((a,b) => parseFloat(a.price.replace(/[^0-9,]/g,'').replace(',','.')) - parseFloat(b.price.replace(/[^0-9,]/g,'').replace(',','.')));
+  else if (currentSort === 'pricedesc') products.sort((a,b) => parseFloat(b.price.replace(/[^0-9,]/g,'').replace(',','.')) - parseFloat(a.price.replace(/[^0-9,]/g,'').replace(',','.')));
+  renderProducts(products);
+}
+
+// DEAL OF THE DAY
+const DOTD_POOL = () => ALL_PRODUCTS.filter(p => p.img && p.pro);
+
+function initDotd() {
+  const pool = DOTD_POOL();
+  if (!pool.length) { document.getElementById('dotdSection').style.display='none'; return; }
+  dotdIndex = Math.floor(Math.random() * pool.length);
+  showDotd(pool[dotdIndex]);
+}
+
+function nextDotd() {
+  const pool = DOTD_POOL();
+  dotdIndex = (dotdIndex + 1) % pool.length;
+  showDotd(pool[dotdIndex]);
+}
+
+function showDotd(p) {
+  document.getElementById('dotdTitle').textContent = p.title;
+  document.getElementById('dotdDesc').textContent = p.desc;
+  document.getElementById('dotdPrice').textContent = p.price;
+  document.getElementById('dotdOld').textContent = p.old || '';
+  document.getElementById('dotdSave').textContent = p.badge || '';
+  document.getElementById('dotdBuy').href = amzLink(p.asin);
+  const imgEl = document.getElementById('dotdImg');
+  imgEl.innerHTML = p.img ? '<img src="' + p.img + '" alt="' + p.title + '" style="width:100%;height:100%;object-fit:contain;padding:12px">' : '<span style="font-size:72px">' + p.icon + '</span>';
+}
+
+// NEWSLETTER
+function doNewsletter() {
+  const email = document.getElementById('nlEmail').value.trim();
+  if (!email || !email.includes('@')) { showToast('Please enter a valid email','⚠️'); return; }
+  document.getElementById('nlEmail').value = '';
+  showToast('🎉 Subscribed! Check your inbox soon.','📬');
+}
+
+// COOKIE
+function initCookie() {
+  if (localStorage.getItem('cookieOk')) document.getElementById('cookieBanner').style.display='none';
+}
 
 // RENDER
+function dealScore(p) {
+  if (!p.badge || !p.badge.includes('%')) return 60;
+  const disc = Math.abs(parseInt(p.badge));
+  const stars = p.stars ? (p.stars.match(/\u2605/g)||[]).length : 3;
+  return Math.min(99, Math.round(disc * 1.4 + stars * 4 + 10));
+}
+
 function renderProducts(products) {
   const grid = document.getElementById('productGrid');
   if (!products.length) {
@@ -602,33 +1212,52 @@ function renderProducts(products) {
   window._pmap = {};
   products.forEach(p => { window._pmap[p.id] = p; });
 
-  grid.innerHTML = products.map(p => {
+  const isPro = user && user.isPro;
+  let adInserted = false;
+
+  grid.innerHTML = products.map((p, idx) => {
     const inWish = wishlist.some(w => w.id === p.id);
     const isAmzCard = p.isAmazonSearch;
+    const isLocked = p.pro && !isPro && !isAmzCard;
     const buyHref = isAmzCard ? p.link : amzLink(p.asin);
     const badge = p.badge ? '<div class="pcard-badge">' + p.badge + '</div>' : '';
-    const proBadge = p.pro ? '<div class="pcard-badge pro-b">\u2728 PRO</div>' : '';
-    const wishBtn = !isAmzCard ? '<button class="pcard-wish' + (inWish ? ' saved' : '') + '" id="wb' + p.id + '" data-wid="' + p.id + '" onclick="event.stopPropagation();toggleWish(' + p.id + ')">' + (inWish ? '\u2764\uFE0F' : '\U0001F90D') + '</button>' : '';
+    const wishBtn = !isAmzCard ? '<button class="pcard-wish' + (inWish ? ' saved' : '') + '" id="wb' + p.id + '" data-wid="' + p.id + '" onclick="event.stopPropagation();toggleWish(' + p.id + ')">' + (inWish ? '\u2764\uFE0F' : '\u{1F90D}') + '</button>' : '';
+    const hasAlert = priceAlerts.some(a => a.id === p.id);
+    const alertDot = hasAlert ? '<div class="pcard-alert-dot" title="Price alert active"></div>' : '';
     const stars = p.stars ? '<div class="pcard-stars">' + p.stars + '</div>' : '';
     const oldPrice = p.old ? '<span class="pcard-old">' + p.old + '</span>' : '';
+    const score = isPro && !isAmzCard ? dealScore(p) : null;
+    const scoreCls = score >= 85 ? 'score-great' : score >= 70 ? 'score-good' : 'score-ok';
+    const scoreHtml = score ? '<div class="deal-score ' + scoreCls + '">' + '\u{1F4CA} ' + score + '/100</div>' : '';
     const btnStyle = isAmzCard ? 'background:#ff9900;color:#1a1a1a' : '';
     const btnText = isAmzCard ? 'Search \u2192' : 'Buy \u2192';
-    return '<div class="pcard' + (isAmzCard ? ' amazon-card' : '') + '" data-pid="' + p.id + '" data-amz="' + (isAmzCard ? 1 : 0) + '" data-link="' + (isAmzCard ? p.link : '') + '">'
-      + badge + proBadge + wishBtn
-      + '<div class="pcard-img"><span>' + p.icon + '</span></div>'
+    const lockOverlay = isLocked ? '<div class="pcard-lock" onclick="event.stopPropagation();document.getElementById(\'pro\').scrollIntoView({behavior:\'smooth\'})"><div class="pcard-lock-icon">\u{1F510}</div><div class="pcard-lock-text">Pro Exclusive<br>Deal</div><button class="pcard-lock-btn">Unlock with Pro</button></div>' : '';
+
+    let adHtml = '';
+    if (!isPro && !adInserted && idx === 11) {
+      adInserted = true;
+      adHtml = '<div class="free-ad-banner" onclick="document.getElementById(\'pro\').scrollIntoView({behavior:\'smooth\'})">\u2728 <strong>Go Pro</strong> \u2014 Remove ads, unlock deal scores & price alerts \u00b7 from \u20ac6.99/mo</div>';
+    }
+
+    return adHtml + '<div class="pcard' + (isAmzCard ? ' amazon-card' : '') + '" data-pid="' + p.id + '" data-amz="' + (isAmzCard ? 1 : 0) + '" data-link="' + (isAmzCard ? p.link : '') + '">'
+      + badge + wishBtn + alertDot + lockOverlay
+      + '<div class="pcard-img">' + (p.img ? '<img src="' + p.img + '" alt="' + p.title + '" loading="lazy"/>' : '<span>' + p.icon + '</span>') + '</div>'
       + '<div class="pcard-body">'
       + '<div class="pcard-cat">' + (p.catLabel || catLabel(p.cat)) + '</div>'
-      + stars
+      + scoreHtml + stars
       + '<div class="pcard-title">' + p.title + '</div>'
       + '<div class="pcard-footer">'
       + '<div><span class="pcard-price">' + p.price + '</span>' + oldPrice + '</div>'
-      + '<a href="' + buyHref + '" target="_blank" rel="noopener" class="buy-btn" style="' + btnStyle + '" onclick="event.stopPropagation();showToast(\'Opening Amazon...\',\'\U0001F6D2\')">' + btnText + '</a>'
+      + '<a href="' + buyHref + '" target="_blank" rel="noopener" class="buy-btn" style="' + btnStyle + '" onclick="event.stopPropagation();showToast(\'Opening Amazon...\',\'\u{1F6D2}\')">'+btnText+'</a>'
       + '</div></div></div>';
   }).join('');
 
+  const countEl = document.getElementById('productCount');
+  if (countEl) countEl.textContent = products.length;
+
   grid.querySelectorAll('.pcard').forEach(card => {
     card.addEventListener('click', function(e) {
-      if (e.target.closest('.buy-btn') || e.target.closest('.pcard-wish')) return;
+      if (e.target.closest('.buy-btn') || e.target.closest('.pcard-wish') || e.target.closest('.pcard-lock') || e.target.closest('.free-ad-banner')) return;
       const p = window._pmap[this.dataset.pid];
       if (!p) return;
       if (this.dataset.amz === '1') { window.open(this.dataset.link, '_blank'); return; }
@@ -638,7 +1267,7 @@ function renderProducts(products) {
 }
 
 function catLabel(c) {
-  const m={sport:'Sport',tech:'Electronics',gaming:'Gaming',home:'Home',fashion:'Fashion',beauty:'Beauty',books:'Books'};
+  const m={sport:'Sport',tech:'Electronics',gaming:'Gaming',home:'Home',fashion:'Fashion',beauty:'Beauty',books:'Books',toys:'Toys',food:'Food & Drink',travel:'Travel',pets:'Pets',office:'Office',auto:'Automotive',health:'Health'};
   return m[c]||c;
 }
 
@@ -647,7 +1276,7 @@ function filterCat(cat, btn) {
   document.getElementById('searchInput').value = '';
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
-  renderProducts(cat === 'all' ? ALL_PRODUCTS : ALL_PRODUCTS.filter(p => p.cat === cat));
+  applyFilters();
 }
 
 function doSearch() {
@@ -667,12 +1296,36 @@ function doSearch() {
 }
 
 function refreshDeals() {
-  const shuffled = [...ALL_PRODUCTS].sort(() => Math.random() - 0.5);
-  renderProducts(currentCat === 'all' ? shuffled : shuffled.filter(p => p.cat === currentCat));
+  applyFilters();
   showToast('Deals refreshed! ↻', '✓');
 }
 
 // WISHLIST
+function heartExplosion(btn) {
+  const rect = btn.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+  const emojis = ['❤️','💕','💗','💖','💓','💝'];
+  for (let i = 0; i < 8; i++) {
+    const el = document.createElement('div');
+    el.className = 'heart-particle';
+    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    const angle = (i / 8) * 2 * Math.PI + (Math.random() - 0.5) * 0.8;
+    const dist = 40 + Math.random() * 40;
+    el.style.left = cx + 'px';
+    el.style.top = cy + 'px';
+    el.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+    el.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
+    el.style.animationDelay = (Math.random() * 0.12) + 's';
+    document.body.appendChild(el);
+    el.addEventListener('animationend', () => el.remove());
+  }
+  btn.classList.remove('pop');
+  void btn.offsetWidth; // force reflow
+  btn.classList.add('pop');
+  btn.addEventListener('animationend', () => btn.classList.remove('pop'), {once:true});
+}
+
 function toggleWish(id) {
   if (!user) { showAuth('login'); showToast('Please sign in to save deals','🔒'); return; }
   const p = ALL_PRODUCTS.find(x => x.id === id);
@@ -680,11 +1333,11 @@ function toggleWish(id) {
   const btn = document.getElementById('wb'+id);
   if (idx > -1) {
     wishlist.splice(idx,1);
-    if(btn){btn.textContent='🤍';btn.classList.remove('saved');}
+    if(btn){btn.innerHTML='\U0001F90D';btn.classList.remove('saved');}
     showToast('Removed from saved','🗑️');
   } else {
     wishlist.push(p);
-    if(btn){btn.textContent='❤️';btn.classList.add('saved');}
+    if(btn){btn.innerHTML='\u2764\uFE0F';btn.classList.add('saved');heartExplosion(btn);}
     showToast(`❤️ ${p.title} saved!`,'');
   }
   document.getElementById('statSaved').textContent = wishlist.length;
@@ -697,13 +1350,22 @@ function renderWishlist() {
     c.innerHTML = `<div style="text-align:center;padding:36px 0;color:var(--muted)"><div style="font-size:40px;margin-bottom:10px">💔</div><div>No saved deals yet.<br>Click ❤️ on any product!</div></div>`;
     return;
   }
-  c.innerHTML = wishlist.map(p => `
+  c.innerHTML = wishlist.map(p => {
+    const hasAlert = priceAlerts.some(a => a.id === p.id);
+    return `
     <div class="wish-item">
       <div class="wish-icon">${p.icon}</div>
-      <div class="wish-info"><div class="wish-title">${p.title}</div><div class="wish-price">${p.price} <span style="color:var(--muted);text-decoration:line-through;font-size:11px">${p.old}</span></div></div>
+      <div class="wish-info"><div class="wish-title">${p.title}</div>
+        <div class="wish-price">${p.price} <span style="color:var(--muted);text-decoration:line-through;font-size:11px">${p.old||''}</span></div>
+        <div style="display:flex;gap:6px;margin-top:5px;flex-wrap:wrap">
+          <button onclick="openAlertModal(${p.id})" style="background:${hasAlert?'rgba(255,159,28,.2)':'var(--surface3)'};border:1px solid ${hasAlert?'var(--accent2)':'var(--border)'};color:${hasAlert?'var(--accent2)':'var(--muted)'};border-radius:50px;padding:3px 9px;font-size:10px;cursor:pointer;">🔔 ${hasAlert?'Alert set':'Set alert'}</button>
+          ${collections.length ? '<button onclick="quickAddToCollection('+p.id+')" style="background:var(--surface3);border:1px solid var(--border);color:var(--muted);border-radius:50px;padding:3px 9px;font-size:10px;cursor:pointer;">📁 Add to list</button>' : ''}
+        </div>
+      </div>
       <a href="${amzLink(p.asin)}" target="_blank" class="buy-btn" style="font-size:11px;padding:6px 12px;margin-right:8px" onclick="showToast('Opening Amazon...','🛒')">Buy →</a>
       <button class="wish-rm" onclick="toggleWish(${p.id})">×</button>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 // AUTH
@@ -777,6 +1439,9 @@ function fillProfile() {
   document.getElementById('editEmail').value = user.email||'';
   document.getElementById('editBio').value = user.bio||'';
   document.getElementById('statDays').textContent = user.days||1;
+  const chip = document.getElementById('planChip');
+  if (chip) { chip.className = 'plan-chip ' + (user.isPro ? 'chip-pro' : 'chip-free'); chip.textContent = user.isPro ? '👑 Pro Member' : '🆓 Free Plan'; }
+  document.getElementById('statSaved').textContent = wishlist.length;
   updateAvatarUI();
 }
 
@@ -812,7 +1477,12 @@ function switchProfTab(name, btn) {
   document.querySelectorAll('.prof-section').forEach(s=>s.classList.remove('active'));
   btn.classList.add('active');
   const sec = document.getElementById('tab-'+name);
-  if(sec){sec.classList.add('active');if(name==='wishlist')renderWishlist();}
+  if (sec) {
+    sec.classList.add('active');
+    if (name==='wishlist') renderWishlist();
+    if (name==='alerts') renderAlerts();
+    if (name==='collections') renderProfileCollections();
+  }
 }
 
 // PAYMENT
@@ -821,13 +1491,29 @@ function openPayModal(icon,title,price,asin) {
   document.getElementById('payIcon').textContent = icon;
   document.getElementById('payTitle').textContent = title;
   document.getElementById('payDesc').textContent = `${price} · Choose payment method — you'll checkout securely on Amazon.`;
+  // Show/hide alert button depending on whether it's a product or pro purchase
+  const alertBtn = document.getElementById('payAlertBtn');
+  if (alertBtn) {
+    if (asin && asin !== 'null') {
+      const p = ALL_PRODUCTS.find(x => x.asin === asin);
+      alertBtn.style.display = 'block';
+      alertBtn.onclick = () => { closeOverlay('payOverlay'); if(p) openAlertModal(p.id); };
+    } else {
+      alertBtn.style.display = 'none';
+    }
+  }
   document.getElementById('payOverlay').classList.add('open');
 }
 
 function doPay(method) {
   closeOverlay('payOverlay');
-  if (currentPayAsin && currentPayAsin !== 'null') window.open(amzLink(currentPayAsin), '_blank');
-  showToast(`Redirecting to Amazon via ${method} ⚡`,'✓');
+  if (currentPayAsin && currentPayAsin !== 'null') {
+    window.open(amzLink(currentPayAsin), '_blank');
+    showToast('Opening Amazon... 🛒','✓');
+  } else {
+    // Pro subscription purchase
+    activatePro();
+  }
 }
 
 // UTILS
@@ -850,13 +1536,15 @@ function showToast(msg,icon='✓') {
   _tt=setTimeout(()=>t.classList.remove('show'),3200);
 }
 
-['authOverlay','payOverlay','profileOverlay'].forEach(id=>{
+['authOverlay','payOverlay','profileOverlay','alertOverlay','collectionsOverlay'].forEach(id=>{
   document.getElementById(id).addEventListener('click',function(e){if(e.target===this)closeOverlay(id);});
 });
 
-// test
 // INIT
 renderProducts(ALL_PRODUCTS);
+initDotd();
+initCookie();
+checkAlerts();
 </script>
 </body>
 </html>
