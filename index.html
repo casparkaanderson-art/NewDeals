@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NewDeals 🔥 – Real Amazon Deals, Updated Daily</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07070d;--surface:#111118;--surface2:#18181f;--surface3:#22222c;--accent:#e63946;--accent2:#ff9f1c;--gold:#ffd700;--text:#f0f0f5;--muted:#6b6b8a;--border:rgba(255,255,255,0.07);--success:#22c55e;--danger:#ef4444;--radius:14px;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.5;}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:15px 40px;background:rgba(7,7,13,0.92);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);}
+.logo{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;letter-spacing:-1px;cursor:pointer;display:flex;align-items:center;gap:3px;}
+.logo-best{color:#fff;}.logo-deals{background:linear-gradient(90deg,#e63946,#ff9f1c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.nav-links{display:flex;gap:4px;}
+.nav-btn{background:none;border:none;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:14px;padding:8px 14px;border-radius:50px;cursor:pointer;transition:all .2s;}
+.nav-btn:hover{color:var(--text);background:var(--surface2);}
+.nav-right{display:flex;align-items:center;gap:8px;}
+.btn{padding:9px 20px;border-radius:50px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .25s;border:none;}
+.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border);}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);}
+.btn-red{background:var(--accent);color:#fff;}
+.btn-red:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(230,57,70,.4);}
+.nav-avatar-wrap{width:34px;height:34px;border-radius:50%;overflow:hidden;border:2px solid var(--accent);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;background:var(--surface2);font-size:14px;font-weight:700;color:var(--text);}
+.nav-avatar-wrap:hover{transform:scale(1.1);}
+.nav-avatar-wrap img{width:100%;height:100%;object-fit:cover;}
+
+/* OVERLAYS */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(14px);z-index:200;align-items:center;justify-content:center;padding:16px;}
+.overlay.open{display:flex;}
+@keyframes popIn{from{opacity:0;transform:scale(.88) translateY(18px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:40px;max-width:420px;width:100%;position:relative;animation:popIn .32s cubic-bezier(.175,.885,.32,1.275);}
+.modal-close{position:absolute;top:14px;right:14px;background:var(--surface2);border:none;color:var(--muted);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.modal-close:hover{color:var(--text);}
+.modal-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:6px;}
+.modal-logo .bd{background:linear-gradient(90deg,#e63946,#ff9f1c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.modal-title{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;letter-spacing:-1px;margin-bottom:6px;}
+.modal-sub{color:var(--muted);font-size:14px;margin-bottom:28px;line-height:1.5;}
+.form-group{margin-bottom:16px;}
+.form-label{display:block;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px;}
+.form-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:11px;padding:12px 15px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:all .2s;}
+.form-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(230,57,70,.12);}
+.form-input::placeholder{color:rgba(107,107,138,.5);}
+textarea.form-input{resize:vertical;line-height:1.5;}
+.form-err{color:var(--danger);font-size:12px;margin-top:5px;display:none;}
+.form-err.show{display:block;}
+.submit-btn{width:100%;padding:13px;border-radius:11px;border:none;background:var(--accent);color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:4px;}
+.submit-btn:hover{background:#d62f3c;transform:translateY(-1px);}
+.strength-bar{height:3px;border-radius:3px;background:var(--surface3);margin-top:7px;overflow:hidden;}
+.strength-fill{height:100%;border-radius:3px;transition:all .3s;width:0;}
+.s-weak{background:var(--danger);width:33%;}.s-med{background:var(--accent2);width:66%;}.s-strong{background:var(--success);width:100%;}
+.auth-switch{text-align:center;margin-top:20px;color:var(--muted);font-size:13px;}
+.auth-switch a{color:var(--accent);cursor:pointer;font-weight:700;}
+.demo-btn{width:100%;padding:11px;border-radius:11px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px;}
+.demo-btn:hover{border-color:var(--accent2);color:var(--accent2);}
+.divider-line{display:flex;align-items:center;gap:10px;margin:18px 0;}
+.divider-line::before,.divider-line::after{content:'';flex:1;height:1px;background:var(--border);}
+.divider-line span{color:var(--muted);font-size:12px;}
+
+/* PROFILE */
+.profile-modal{background:var(--surface);border:1px solid var(--border);border-radius:22px;max-width:580px;width:100%;position:relative;animation:popIn .32s cubic-bezier(.175,.885,.32,1.275);overflow:hidden;max-height:92vh;display:flex;flex-direction:column;}
+.prof-header{background:linear-gradient(135deg,#130e1a,#1a1020);padding:36px;text-align:center;border-bottom:1px solid var(--border);position:relative;flex-shrink:0;}
+.prof-header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(230,57,70,.1),transparent 65%);pointer-events:none;}
+.avatar-wrap{position:relative;display:inline-block;margin-bottom:14px;}
+.avatar-circle{width:88px;height:88px;border-radius:50%;border:3px solid var(--accent);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:800;overflow:hidden;margin:0 auto;}
+.avatar-circle img{width:100%;height:100%;object-fit:cover;}
+.avatar-edit{position:absolute;bottom:2px;right:2px;width:26px;height:26px;border-radius:50%;background:var(--accent);border:none;color:#fff;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.avatar-edit:hover{transform:scale(1.15);background:var(--accent2);}
+#avatarFileInput{display:none;}
+.prof-name{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:3px;}
+.prof-email-disp{color:var(--muted);font-size:13px;margin-bottom:10px;}
+.plan-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:50px;font-size:11px;font-weight:700;}
+.chip-free{background:var(--surface3);border:1px solid var(--border);color:var(--muted);}
+.chip-pro{background:linear-gradient(135deg,#f6d365,#fda085);color:#1a1a1a;}
+.prof-tabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;}
+.prof-tab{flex:1;padding:13px 6px;background:none;border:none;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;border-bottom:2px solid transparent;}
+.prof-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.prof-tab:hover{color:var(--text);}
+.prof-body{padding:28px;overflow-y:auto;flex:1;}
+.prof-section{display:none;}.prof-section.active{display:block;}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px;}
+.stat-box{background:var(--surface2);border:1px solid var(--border);border-radius:11px;padding:16px;text-align:center;}
+.stat-num{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--accent);}
+.stat-label{color:var(--muted);font-size:11px;margin-top:3px;}
+.wish-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);}
+.wish-icon{width:44px;height:44px;background:var(--surface2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.wish-title{font-size:13px;font-weight:600;margin-bottom:2px;}
+.wish-price{color:var(--accent2);font-size:12px;font-weight:700;}
+.wish-info{flex:1;}
+.wish-rm{background:none;border:none;color:var(--muted);font-size:16px;cursor:pointer;padding:4px;border-radius:7px;transition:all .2s;}
+.wish-rm:hover{color:var(--danger);}
+.toggle-row{background:var(--surface2);border:1px solid var(--border);border-radius:11px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.toggle-title{font-size:13px;font-weight:600;margin-bottom:2px;}.toggle-desc{font-size:11px;color:var(--muted);}
+.toggle{position:relative;width:40px;height:22px;flex-shrink:0;}
+.toggle input{opacity:0;width:0;height:0;}
+.toggle-slider{position:absolute;cursor:pointer;inset:0;background:var(--surface3);border-radius:22px;transition:.3s;}
+.toggle-slider::before{content:'';position:absolute;width:16px;height:16px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.3s;}
+.toggle input:checked+.toggle-slider{background:var(--accent);}
+.toggle input:checked+.toggle-slider::before{transform:translateX(18px);}
+
+/* HERO */
+.hero{position:relative;text-align:center;padding:90px 40px 60px;overflow:hidden;}
+.hero-glow{position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:700px;height:460px;background:radial-gradient(ellipse,rgba(230,57,70,.13),transparent 70%);pointer-events:none;}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;background:var(--surface2);border:1px solid var(--border);padding:5px 14px;border-radius:50px;font-size:12px;color:var(--accent2);margin-bottom:24px;}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--success);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(40px,6.5vw,82px);font-weight:800;line-height:1.0;letter-spacing:-3px;margin-bottom:20px;}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,#e63946,#ff9f1c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero p{max-width:500px;margin:0 auto 36px;color:var(--muted);font-size:17px;line-height:1.6;}
+.hero-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.hero-stats{display:flex;gap:40px;justify-content:center;padding:48px 0 0;flex-wrap:wrap;}
+.hstat-num{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;background:linear-gradient(135deg,#e63946,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hstat-label{color:var(--muted);font-size:12px;margin-top:3px;}
+
+/* SEARCH */
+.search-wrap{max-width:640px;margin:0 auto 56px;padding:0 40px;}
+.search-box{display:flex;background:var(--surface);border:1px solid var(--border);border-radius:50px;overflow:hidden;transition:all .2s;}
+.search-box:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(230,57,70,.1);}
+.search-input{flex:1;background:none;border:none;padding:14px 20px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;outline:none;}
+.search-input::placeholder{color:var(--muted);}
+.search-btn{background:var(--accent);border:none;color:#fff;padding:12px 24px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;border-radius:0 50px 50px 0;}
+.search-btn:hover{background:#d62f3c;}
+
+/* DEALS SECTION */
+.section{padding:0 40px 80px;max-width:1280px;margin:0 auto;}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:12px;}
+.section-title{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;letter-spacing:-1px;}
+.section-sub{color:var(--muted);font-size:14px;margin-bottom:28px;}
+.live-badge{display:flex;align-items:center;gap:6px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);padding:6px 14px;border-radius:50px;font-size:12px;color:var(--success);font-weight:600;}
+.live-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--success);animation:pulse 1.5s infinite;}
+
+/* TABS */
+.tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:28px;}
+.tab{display:flex;align-items:center;gap:6px;padding:9px 17px;border-radius:50px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:13px;cursor:pointer;transition:all .2s;white-space:nowrap;font-family:'DM Sans',sans-serif;font-weight:500;}
+.tab:hover,.tab.active{background:var(--accent);border-color:var(--accent);color:#fff;transform:translateY(-1px);}
+
+/* LIVE BANNER */
+.live-banner{background:linear-gradient(135deg,rgba(230,57,70,.07),rgba(255,159,28,.04));border:1px solid rgba(230,57,70,.18);border-radius:16px;padding:18px 24px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+.lb-left{display:flex;align-items:center;gap:14px;}
+.lb-icon{font-size:30px;}
+.lb-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;margin-bottom:2px;}
+.lb-sub{color:var(--muted);font-size:12px;}
+
+/* PRODUCT GRID */
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:15px;}
+.pcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all .28s;cursor:pointer;position:relative;}
+.pcard:hover{transform:translateY(-5px);border-color:rgba(230,57,70,.3);box-shadow:0 16px 40px rgba(0,0,0,.5);}
+.pcard-badge{position:absolute;top:10px;left:10px;background:var(--accent);color:#fff;font-size:10px;font-weight:800;padding:3px 9px;border-radius:50px;text-transform:uppercase;letter-spacing:.5px;z-index:1;}
+.pcard-badge.pro-b{background:linear-gradient(135deg,#f6d365,#fda085);color:#1a1a1a;left:auto;right:10px;}
+.pcard-wish{position:absolute;top:10px;right:10px;background:rgba(7,7,13,.72);border:none;font-size:15px;width:30px;height:30px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;backdrop-filter:blur(6px);z-index:1;}
+.pcard-wish:hover{transform:scale(1.2);}
+.pcard-wish.saved{background:rgba(230,57,70,.22);}
+.pcard-img{width:100%;height:165px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:52px;}
+.pcard-body{padding:15px;}
+.pcard-cat{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--accent);font-weight:700;margin-bottom:5px;}
+.pcard-stars{color:var(--gold);font-size:11px;margin-bottom:8px;}
+.pcard-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:10px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.pcard-footer{display:flex;align-items:center;justify-content:space-between;}
+.pcard-price{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--accent2);}
+.pcard-old{font-size:11px;color:var(--muted);text-decoration:line-through;margin-left:4px;}
+.buy-btn{background:var(--accent);color:#fff;border:none;padding:7px 14px;border-radius:50px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;}
+.buy-btn:hover{background:#d62f3c;transform:scale(1.05);}
+.amazon-card{border-color:rgba(255,153,0,.28)!important;background:linear-gradient(135deg,rgba(255,153,0,.05),transparent)!important;}
+
+/* PRO */
+.pro-section{margin:0 40px 80px;background:linear-gradient(135deg,#130e1a,#1a1020);border:1px solid rgba(253,160,133,.22);border-radius:22px;padding:56px;text-align:center;position:relative;overflow:hidden;}
+.pro-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(230,57,70,.07),transparent 70%);pointer-events:none;}
+.pro-section h2{font-family:'Syne',sans-serif;font-size:42px;font-weight:800;background:linear-gradient(135deg,#f6d365,#fda085);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:12px;letter-spacing:-2px;}
+.pro-section p{color:var(--muted);max-width:460px;margin:0 auto 40px;font-size:15px;}
+.pricing-row{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;}
+.price-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px;min-width:210px;max-width:255px;text-align:left;flex:1;position:relative;transition:all .28s;}
+.price-card:hover{transform:translateY(-4px);}
+.price-card.featured{border-color:rgba(253,160,133,.38);background:linear-gradient(135deg,rgba(246,211,101,.04),rgba(253,160,133,.04));}
+.pop-tag{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#f6d365,#fda085);color:#1a1a1a;font-size:10px;font-weight:800;padding:4px 14px;border-radius:50px;white-space:nowrap;}
+.price-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px;}
+.price-amt{font-family:'Syne',sans-serif;font-size:40px;font-weight:800;line-height:1;margin:12px 0 3px;}
+.price-period{color:var(--muted);font-size:12px;margin-bottom:18px;}
+.price-list{list-style:none;margin-bottom:20px;}
+.price-list li{padding:6px 0;font-size:13px;color:var(--muted);border-bottom:1px solid var(--border);display:flex;gap:8px;}
+.price-list li::before{content:'✓';color:var(--success);font-weight:700;flex-shrink:0;}
+.price-list li.no{color:rgba(255,255,255,.2);}
+.price-list li.no::before{content:'✕';color:rgba(255,255,255,.15);}
+.upgrade-btn{width:100%;padding:12px;border-radius:50px;border:none;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;}
+.upgrade-free{background:var(--surface2);color:var(--text);border:1px solid var(--border);}
+.upgrade-pro{background:linear-gradient(135deg,#f6d365,#fda085);color:#1a1a1a;}
+.upgrade-btn:hover{transform:translateY(-2px);}
+
+/* PAY MODAL */
+.pay-modal{background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:36px;max-width:400px;width:100%;animation:popIn .3s ease;position:relative;}
+.pay-modal h3{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:6px;}
+.pay-modal p{color:var(--muted);font-size:13px;margin-bottom:24px;}
+.pay-btns{display:flex;flex-direction:column;gap:9px;}
+.pay-btn{width:100%;padding:13px;border-radius:11px;border:none;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:9px;font-family:'DM Sans',sans-serif;}
+.pay-btn:hover{transform:translateY(-2px);filter:brightness(1.08);}
+.p-paypal{background:#0070ba;color:#fff;}.p-amazon{background:#ff9900;color:#1a1a1a;}.p-klarna{background:#ffb3c7;color:#1a1a1a;}.p-card{background:var(--surface2);color:var(--text);border:1px solid var(--border);}
+
+/* TOAST */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--surface);border:1px solid var(--border);color:var(--text);padding:12px 22px;border-radius:50px;font-size:13px;font-weight:600;z-index:9999;transition:transform .4s cubic-bezier(.175,.885,.32,1.275);pointer-events:none;box-shadow:0 8px 28px rgba(0,0,0,.5);display:flex;align-items:center;gap:8px;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* FOOTER */
+footer{background:var(--surface);border-top:1px solid var(--border);padding:40px;text-align:center;color:var(--muted);font-size:12px;}
+.footer-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:10px;}
+.affiliate-note{max-width:600px;margin:10px auto 0;font-size:11px;color:rgba(255,255,255,.18);line-height:1.6;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.hero>*{animation:fadeUp .55s ease both;}
+.hero>*:nth-child(2){animation-delay:.08s}.hero>*:nth-child(3){animation-delay:.16s}.hero>*:nth-child(4){animation-delay:.24s}.hero>*:nth-child(5){animation-delay:.32s}
+@media(max-width:768px){nav{padding:13px 16px;}.nav-links{display:none;}.hero{padding:60px 16px 36px;}.section{padding:0 16px 60px;}.search-wrap{padding:0 16px;}.pro-section{margin:0 16px 60px;padding:36px 18px;}}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"><span id="toastIcon">✓</span><span id="toastMsg"></span></div>
+
+<!-- AUTH OVERLAY -->
+<div class="overlay" id="authOverlay">
+  <div class="modal" id="loginCard">
+    <button class="modal-close" onclick="closeOverlay('authOverlay')">×</button>
+    <div class="modal-logo"><span class="bd">NewDeals</span> 🔥</div>
+    <div class="modal-title">Welcome back</div>
+    <div class="modal-sub">Sign in to save deals and manage your profile.</div>
+    <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" id="loginEmail" placeholder="you@email.com"><div class="form-err" id="loginErr"></div></div>
+    <div class="form-group"><label class="form-label">Password</label><input class="form-input" type="password" id="loginPw" placeholder="••••••••"></div>
+    <button class="submit-btn" onclick="doLogin()">Sign In →</button>
+    <div class="divider-line"><span>or</span></div>
+    <button class="demo-btn" onclick="quickDemo()">⚡ Try Demo Account (instant)</button>
+    <div class="auth-switch">No account? <a onclick="switchAuth('register')">Sign up free</a></div>
+  </div>
+  <div class="modal" id="registerCard" style="display:none">
+    <button class="modal-close" onclick="closeOverlay('authOverlay')">×</button>
+    <div class="modal-logo"><span class="bd">NewDeals</span> 🔥</div>
+    <div class="modal-title">Create account</div>
+    <div class="modal-sub">Free forever. No credit card needed.</div>
+    <div class="form-group"><label class="form-label">Full Name</label><input class="form-input" type="text" id="regName" placeholder="Your Name"></div>
+    <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" id="regEmail" placeholder="you@email.com"><div class="form-err" id="regErr"></div></div>
+    <div class="form-group"><label class="form-label">Password</label><input class="form-input" type="password" id="regPw" placeholder="Min. 6 characters" oninput="checkStrength(this.value)"><div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div></div>
+    <button class="submit-btn" onclick="doRegister()">Create Account →</button>
+    <div class="auth-switch">Already registered? <a onclick="switchAuth('login')">Sign in</a></div>
+  </div>
+</div>
+
+<!-- PROFILE OVERLAY -->
+<div class="overlay" id="profileOverlay">
+  <div class="profile-modal">
+    <button class="modal-close" onclick="closeOverlay('profileOverlay')" style="z-index:10">×</button>
+    <div class="prof-header">
+      <div class="avatar-wrap">
+        <div class="avatar-circle" id="profAvatar">😊</div>
+        <button class="avatar-edit" onclick="document.getElementById('avatarFileInput').click()">✏️</button>
+        <input type="file" id="avatarFileInput" accept="image/*" onchange="uploadAvatar(this)">
+      </div>
+      <div class="prof-name" id="profName">User</div>
+      <div class="prof-email-disp" id="profEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0e7b7d6b7c4e6b636f6762206d6163">[email&#160;protected]</a></div>
+      <div><div class="plan-chip chip-free">🆓 Free Plan</div></div>
+    </div>
+    <div class="prof-tabs">
+      <button class="prof-tab active" onclick="switchProfTab('overview',this)">📊 Overview</button>
+      <button class="prof-tab" onclick="switchProfTab('edit',this)">✏️ Edit Profile</button>
+      <button class="prof-tab" onclick="switchProfTab('wishlist',this)">❤️ Saved</button>
+      <button class="prof-tab" onclick="switchProfTab('settings',this)">⚙️ Settings</button>
+    </div>
+    <div class="prof-body">
+      <div class="prof-section active" id="tab-overview">
+        <div class="stat-row">
+          <div class="stat-box"><div class="stat-num" id="statSaved">0</div><div class="stat-label">Saved Deals</div></div>
+          <div class="stat-box"><div class="stat-num">27</div><div class="stat-label">Total Products</div></div>
+          <div class="stat-box"><div class="stat-num" id="statDays">1</div><div class="stat-label">Days Member</div></div>
+        </div>
+        <p style="color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:18px">Welcome to <strong style="color:var(--text)">NewDeals 🔥</strong>! Browse real Amazon deals, save your favourites and upgrade for price alerts.</p>
+        <button class="btn btn-red" onclick="closeOverlay('profileOverlay');document.getElementById('pro').scrollIntoView({behavior:'smooth'})">✨ Upgrade to Pro</button>
+      </div>
+      <div class="prof-section" id="tab-edit">
+        <div class="form-group">
+          <label class="form-label">Profile Photo</label>
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:4px">
+            <div id="editAvatarPrev" style="width:50px;height:50px;border-radius:50%;background:var(--surface2);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:20px;overflow:hidden;flex-shrink:0">😊</div>
+            <button class="btn btn-outline" style="font-size:12px;padding:7px 14px" onclick="document.getElementById('avatarFileInput').click()">📷 Upload photo</button>
+          </div>
+        </div>
+        <div class="form-group"><label class="form-label">Full Name</label><input class="form-input" type="text" id="editName" placeholder="Your name"></div>
+        <div class="form-group"><label class="form-label">Username</label><input class="form-input" type="text" id="editUsername" placeholder="@username"></div>
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" id="editEmail" placeholder="you@email.com"></div>
+        <div class="form-group"><label class="form-label">Bio</label><textarea class="form-input" id="editBio" rows="3" placeholder="Tell us about yourself..."></textarea></div>
+        <button class="submit-btn" onclick="saveProfile()">Save Changes ✓</button>
+      </div>
+      <div class="prof-section" id="tab-wishlist">
+        <p style="color:var(--muted);font-size:13px;margin-bottom:14px">Your saved deals</p>
+        <div id="wishlistContainer"><div style="text-align:center;padding:36px 0;color:var(--muted)"><div style="font-size:40px;margin-bottom:10px">💔</div><div>No saved deals yet.<br>Click ❤️ on any product!</div></div></div>
+      </div>
+      <div class="prof-section" id="tab-settings">
+        <div class="toggle-row"><div><div class="toggle-title">Email Notifications</div><div class="toggle-desc">Price drops & deal alerts</div></div><label class="toggle"><input type="checkbox" checked onchange="showToast('Setting saved','⚙️')"><span class="toggle-slider"></span></label></div>
+        <div class="toggle-row"><div><div class="toggle-title">Push Notifications</div><div class="toggle-desc">Instant deal alerts</div></div><label class="toggle"><input type="checkbox" onchange="showToast('Setting saved','⚙️')"><span class="toggle-slider"></span></label></div>
+        <div class="toggle-row"><div><div class="toggle-title">Dark Mode</div><div class="toggle-desc">Always on (default)</div></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+        <div style="margin-top:22px;padding-top:18px;border-top:1px solid var(--border)">
+          <button class="btn btn-outline" style="color:var(--danger);border-color:var(--danger);width:100%;padding:12px" onclick="doLogout()">🚪 Sign Out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAY OVERLAY -->
+<div class="overlay" id="payOverlay">
+  <div class="pay-modal">
+    <button class="modal-close" onclick="closeOverlay('payOverlay')">×</button>
+    <div style="font-size:40px;margin-bottom:12px" id="payIcon">🛒</div>
+    <h3 id="payTitle">Buy Product</h3>
+    <p id="payDesc">Choose your payment method – you will be redirected to Amazon to complete the purchase.</p>
+    <div class="pay-btns">
+      <button class="pay-btn p-paypal" onclick="doPay('PayPal')">🅿 Pay with PayPal</button>
+      <button class="pay-btn p-amazon" onclick="doPay('Amazon Pay')">📦 Amazon Pay</button>
+      <button class="pay-btn p-klarna" onclick="doPay('Klarna')">🌸 Klarna – Buy now, pay later</button>
+      <button class="pay-btn p-card" onclick="doPay('Credit Card')">💳 Credit / Debit Card</button>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <span class="logo-best">New</span><span style="background:linear-gradient(90deg,#e63946,#ff9f1c);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Deals</span><span style="margin-left:4px">🔥</span>
+  </div>
+  <div class="nav-links">
+    <button class="nav-btn" onclick="document.getElementById('deals').scrollIntoView({behavior:'smooth'})">Deals</button>
+    <button class="nav-btn" onclick="document.getElementById('deals').scrollIntoView({behavior:'smooth'})">Categories</button>
+    <button class="nav-btn" onclick="document.getElementById('pro').scrollIntoView({behavior:'smooth'})">Pro ✨</button>
+  </div>
+  <div class="nav-right" id="navRight">
+    <button class="btn btn-outline" onclick="showAuth('login')">Sign In</button>
+    <button class="btn btn-red" onclick="showAuth('register')">Sign Up Free</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge"><span class="live-dot"></span> Live Amazon deals — updated daily</div>
+  <h1>Real <em>Amazon Deals</em>,<br>all in one place.</h1>
+  <p>NewDeals shows you the hottest Amazon deals across every category. Click any product and buy directly on Amazon.</p>
+  <div class="hero-btns">
+    <button class="btn btn-red" style="padding:13px 28px;font-size:15px" onclick="document.getElementById('deals').scrollIntoView({behavior:'smooth'})">🔥 Browse Deals</button>
+    <button class="btn btn-outline" style="padding:13px 28px;font-size:15px" onclick="showAuth('register')">Create Free Account</button>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-num">27+</div><div class="hstat-label">Products</div></div>
+    <div class="hstat"><div class="hstat-num">€2.4M</div><div class="hstat-label">Saved by users</div></div>
+    <div class="hstat"><div class="hstat-num">98%</div><div class="hstat-label">Satisfied</div></div>
+    <div class="hstat"><div class="hstat-num">24/7</div><div class="hstat-label">Live updates</div></div>
+  </div>
+</section>
+
+<!-- SEARCH -->
+<div class="search-wrap">
+  <div class="search-box">
+    <input class="search-input" type="text" id="searchInput" placeholder="🔍  Search deals... e.g. headphones, laptop, sneakers" onkeydown="if(event.key==='Enter')doSearch()">
+    <button class="search-btn" onclick="doSearch()">Search Amazon</button>
+  </div>
+</div>
+
+<!-- DEALS -->
+<div class="section" id="deals">
+  <div class="section-head">
+    <h2 class="section-title">Today's Best Deals</h2>
+    <div class="live-badge"><span class="live-badge-dot"></span> Live from Amazon</div>
+  </div>
+  <p class="section-sub">Click any product to go directly to Amazon and buy. Every purchase supports NewDeals! 💸</p>
+  <div class="live-banner">
+    <div class="lb-left">
+      <div class="lb-icon">⚡</div>
+      <div>
+        <div class="lb-title">Real Amazon Products</div>
+        <div class="lb-sub">All links go directly to Amazon.de — secure checkout, all payment methods accepted.</div>
+      </div>
+    </div>
+    <button class="btn btn-red" onclick="refreshDeals()">↻ Refresh</button>
+  </div>
+  <div class="tabs" id="tabs">
+    <button class="tab active" onclick="filterCat('all',this)">⚡ All</button>
+    <button class="tab" onclick="filterCat('sport',this)">🏋️ Sport</button>
+    <button class="tab" onclick="filterCat('tech',this)">💻 Electronics</button>
+    <button class="tab" onclick="filterCat('gaming',this)">🎮 Gaming</button>
+    <button class="tab" onclick="filterCat('home',this)">🏠 Home</button>
+    <button class="tab" onclick="filterCat('fashion',this)">👗 Fashion</button>
+    <button class="tab" onclick="filterCat('beauty',this)">✨ Beauty</button>
+    <button class="tab" onclick="filterCat('books',this)">📚 Books</button>
+  </div>
+  <div id="productGrid" class="product-grid"></div>
+</div>
+
+<!-- PRO -->
+<div class="pro-section" id="pro">
+  <div style="font-size:44px;margin-bottom:14px">👑</div>
+  <h2>NewDeals PRO</h2>
+  <p>Price alerts, exclusive deals, ad-free browsing and full wishlist — all unlocked.</p>
+  <div class="pricing-row">
+    <div class="price-card">
+      <div class="price-name">Free</div>
+      <div class="price-amt"><span style="font-size:18px;vertical-align:top;margin-top:10px;display:inline-block">€</span>0</div>
+      <div class="price-period">forever free</div>
+      <ul class="price-list">
+        <li>Browse all deals</li>
+        <li>Category filters</li>
+        <li>5 wishlist slots</li>
+        <li class="no">Price alerts</li>
+        <li class="no">Exclusive Pro deals</li>
+        <li class="no">Ad-free</li>
+      </ul>
+      <button class="upgrade-btn upgrade-free" onclick="showAuth('register')">Get Started</button>
+    </div>
+    <div class="price-card featured">
+      <div class="pop-tag">⚡ Most Popular</div>
+      <div class="price-name">Pro Monthly</div>
+      <div class="price-amt"><span style="font-size:18px;vertical-align:top;margin-top:10px;display:inline-block">€</span>6<span style="font-size:18px">.99</span></div>
+      <div class="price-period">per month · cancel anytime</div>
+      <ul class="price-list">
+        <li>Everything in Free</li>
+        <li>Unlimited wishlist</li>
+        <li>🔔 Price alerts</li>
+        <li>🔐 Exclusive deals</li>
+        <li>📊 Price history</li>
+        <li>🚫 Ad-free</li>
+      </ul>
+      <button class="upgrade-btn upgrade-pro" onclick="openPayModal('👑','NewDeals Pro','€6.99/month',null)">Go Pro ✨</button>
+    </div>
+    <div class="price-card">
+      <div class="price-name">Pro Yearly</div>
+      <div class="price-amt"><span style="font-size:18px;vertical-align:top;margin-top:10px;display:inline-block">€</span>49<span style="font-size:18px">.99</span></div>
+      <div class="price-period">per year · save 40%</div>
+      <ul class="price-list">
+        <li>Everything in Pro</li>
+        <li>Priority support</li>
+        <li>Early beta features</li>
+        <li>🔔 Price alerts</li>
+        <li>🔐 Exclusive deals</li>
+        <li>🚫 Ad-free</li>
+      </ul>
+      <button class="upgrade-btn upgrade-pro" onclick="openPayModal('👑','NewDeals Pro Yearly','€49.99/year',null)">Save 40% 💰</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo"><span style="background:linear-gradient(90deg,#e63946,#ff9f1c);-webkit-background-clip:text;-webkit-text-fill-color:transparent">NewDeals</span> 🔥</div>
+  <div>The #1 Amazon Deals Platform</div>
+  <div class="affiliate-note">* NewDeals participates in the Amazon affiliate program. As an Amazon Associate we earn from qualifying purchases. This does not increase your price in any way.</div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ============================================================
+// ⚠️  REPLACE THIS WITH YOUR REAL AMAZON AFFILIATE TAG!
+// Get it free at: https://affiliate-program.amazon.de
+// ============================================================
+const AFFILIATE_TAG = 'DEIN-TAG-20';
+
+function amzLink(asin) {
+  return `https://www.amazon.de/dp/${asin}?tag=${AFFILIATE_TAG}&linkCode=ogi&th=1&psc=1`;
+}
+function amzSearch(q) {
+  return `https://www.amazon.de/s?k=${encodeURIComponent(q)}&tag=${AFFILIATE_TAG}`;
+}
+
+// ============================================================
+// ALL PRODUCTS — Real Amazon ASINs (amazon.de)
+// ============================================================
+const ALL_PRODUCTS = [
+  // ===== SPORT (15) =====
+  {id:1,  cat:'sport',icon:'🏋️',title:'Bowflex SelectTech Dumbbells',desc:'Adjustable 2–24kg, replaces 15 sets.',price:'€299,00',old:'€399,00',badge:'−25%',asin:'B001ARYU58',stars:'★★★★★'},
+  {id:2,  cat:'sport',icon:'🚴',title:'Ultrasport F-Bike 200B',desc:'Indoor cycling, LCD display, foldable.',price:'€89,99',old:'€129,99',badge:'−30%',asin:'B003TDTPLI',stars:'★★★★☆'},
+  {id:3,  cat:'sport',icon:'🧘',title:'TOPLUS Yoga Mat 6mm',desc:'Non-slip TPE, eco-friendly, carry strap.',price:'€24,99',old:'€39,99',badge:'HOT',asin:'B07BGLXBNM',stars:'★★★★★'},
+  {id:4,  cat:'sport',icon:'🏃',title:'Garmin Forerunner 55',desc:'GPS running watch, heart rate, 20h.',price:'€149,00',old:'€199,99',badge:'−25%',asin:'B096BQJ4SB',stars:'★★★★★'},
+  {id:5,  cat:'sport',icon:'💪',title:'TRX Home Suspension Trainer',desc:'Full body workout, door anchor included.',price:'€79,95',old:'€119,95',badge:'DEAL',asin:'B08CNGXVD5',stars:'★★★★☆'},
+  {id:51, cat:'sport',icon:'🥊',title:'Everlast Boxing Gloves 16oz',desc:'Pro training gloves, foam padding.',price:'€34,99',old:'€54,99',badge:'−36%',asin:'B0009ZA6VC',stars:'★★★★☆'},
+  {id:52, cat:'sport',icon:'⛹️',title:'Under Armour Hovr Sonic 5',desc:'GPS running shoe, MapMyRun tracking.',price:'€69,95',old:'€109,95',badge:'−36%',asin:'B09V4RHGFJ',stars:'★★★★★'},
+  {id:53, cat:'sport',icon:'🏊',title:'Speedo Fastskin Goggles',desc:'UV protection, anti-fog racing lenses.',price:'€19,99',old:'€34,99',badge:'−43%',asin:'B000BKNDBO',stars:'★★★★☆'},
+  {id:54, cat:'sport',icon:'🧗',title:'Kettlebell 16kg Cast Iron',desc:'Powder coated, competition grip.',price:'€29,99',old:'€44,99',badge:'−33%',asin:'B000GIRK0Y',stars:'★★★★★'},
+  {id:55, cat:'sport',icon:'🏸',title:'Wilson Badminton Racket Set',desc:'2 rackets + shuttlecocks, carry bag.',price:'€27,99',old:'€44,99',badge:'−37%',asin:'B000BKXFK0',stars:'★★★★☆'},
+  {id:56, cat:'sport',icon:'⚽',title:'Adidas UEFA Champions Ball',desc:'Official match ball, thermally bonded.',price:'€39,99',old:'€59,99',badge:'−33%',asin:'B0BHKFTYBD',stars:'★★★★★'},
+  {id:57, cat:'sport',icon:'🧲',title:'Resistance Bands Set (5)',desc:'5 levels, latex-free, door anchor incl.',price:'€15,99',old:'€24,99',badge:'−36%',asin:'B07G5BCKN3',stars:'★★★★☆'},
+  {id:58, cat:'sport',icon:'🏂',title:'Rollerblade Zetrablade Adults',desc:'Inline skates, 80mm wheels, ABEC 7.',price:'€79,99',old:'€119,99',badge:'−33%',asin:'B00FEWTFI0',stars:'★★★★☆'},
+  {id:59, cat:'sport',icon:'🥅',title:'Pure2Improve Pull-Up Bar',desc:'Doorframe bar, no screws, 100kg max.',price:'€19,99',old:'€29,99',badge:'−33%',asin:'B00A67ULMW',stars:'★★★★★'},
+  {id:60, cat:'sport',icon:'🎽',title:'Polar H10 Heart Rate Sensor',desc:'Most accurate HR sensor, Bluetooth & ANT+.',price:'€79,90',old:'€99,90',badge:'−20%',asin:'B07CCRFP7Y',stars:'★★★★★'},
+
+  // ===== ELECTRONICS (15) =====
+  {id:6,  cat:'tech',icon:'🎧',title:'Sony WH-1000XM5',desc:'Best-in-class noise cancelling, 30h.',price:'€279,00',old:'€379,00',badge:'−26%',asin:'B09XS7JWHH',stars:'★★★★★',pro:true},
+  {id:7,  cat:'tech',icon:'💻',title:'Apple MacBook Air M2',desc:'13" Retina, 8GB RAM, 256GB SSD.',price:'€1.099,00',old:'€1.299,00',badge:'−15%',asin:'B0B3C2R8MP',stars:'★★★★★',pro:true},
+  {id:8,  cat:'tech',icon:'📱',title:'Samsung Galaxy S24',desc:'6.2" AMOLED 120Hz, 50MP, 5G.',price:'€699,00',old:'€899,00',badge:'−22%',asin:'B0CQTDB7PC',stars:'★★★★★'},
+  {id:9,  cat:'tech',icon:'⌚',title:'Apple Watch Series 9',desc:'GPS, always-on display, crash detection.',price:'€399,00',old:'€499,00',badge:'−20%',asin:'B0CHX7R6WJ',stars:'★★★★★'},
+  {id:10, cat:'tech',icon:'📷',title:'Sony Alpha ZV-E10',desc:'Mirrorless vlog cam, 4K, APS-C.',price:'€549,00',old:'€749,00',badge:'−26%',asin:'B09BLYXN2G',stars:'★★★★☆',pro:true},
+  {id:61, cat:'tech',icon:'🖨️',title:'Canon PIXMA TS8350a',desc:'All-in-one wireless printer, photo quality.',price:'€79,99',old:'€119,99',badge:'−33%',asin:'B08X6WNQSM',stars:'★★★★☆'},
+  {id:62, cat:'tech',icon:'🔌',title:'Anker 735 GaN Charger 65W',desc:'3-port, folds flat, laptop charging.',price:'€35,99',old:'€55,99',badge:'−36%',asin:'B09W2PNKZH',stars:'★★★★★'},
+  {id:63, cat:'tech',icon:'📺',title:'LG 55" OLED C3 TV',desc:'4K OLED, 120Hz, Dolby Vision.',price:'€999,00',old:'€1.499,00',badge:'−33%',asin:'B0BVX4F5HJ',stars:'★★★★★',pro:true},
+  {id:64, cat:'tech',icon:'🔊',title:'Sonos Era 100',desc:'Stereo sound, Bluetooth + WiFi.',price:'€199,00',old:'€269,00',badge:'−26%',asin:'B0BXY3ZXK8',stars:'★★★★☆'},
+  {id:65, cat:'tech',icon:'🖥️',title:'Dell UltraSharp 27" 4K Monitor',desc:'IPS, USB-C 90W, factory calibrated.',price:'€499,00',old:'€699,00',badge:'−28%',asin:'B08VFJ4KDM',stars:'★★★★★'},
+  {id:66, cat:'tech',icon:'🎙️',title:'Blue Yeti USB Microphone',desc:'Professional multi-pattern, plug & play.',price:'€89,99',old:'€129,99',badge:'−30%',asin:'B002VA464S',stars:'★★★★★'},
+  {id:67, cat:'tech',icon:'📡',title:'TP-Link WiFi 6 Router AX3000',desc:'Dual band, MU-MIMO, 40% faster WiFi.',price:'€59,99',old:'€89,99',badge:'−33%',asin:'B08H95NCK6',stars:'★★★★☆'},
+  {id:68, cat:'tech',icon:'💾',title:'Samsung 1TB T7 SSD',desc:'Portable, 1050MB/s, USB-C, shock proof.',price:'€79,99',old:'€119,99',badge:'−33%',asin:'B0874YJP92',stars:'★★★★★'},
+  {id:69, cat:'tech',icon:'🖱️',title:'Logitech MX Master 3S Mouse',desc:'8K DPI, silent clicks, USB-C charge.',price:'€89,99',old:'€119,99',badge:'−25%',asin:'B09HM94VDS',stars:'★★★★★'},
+  {id:70, cat:'tech',icon:'🎮',title:'Meta Quest 3 128GB',desc:'Mixed reality headset, 4K display.',price:'€499,99',old:'€599,99',badge:'−17%',asin:'B0C7JPJSQ8',stars:'★★★★★',pro:true},
+
+  // ===== GAMING (15) =====
+  {id:11, cat:'gaming',icon:'🎮',title:'PlayStation 5 Slim',desc:'PS5 Slim disc edition, next-gen.',price:'€449,99',old:'€549,99',badge:'−18%',asin:'B0CL5KNB9M',stars:'★★★★★',pro:true},
+  {id:12, cat:'gaming',icon:'🖥️',title:'Samsung Odyssey G5 27"',desc:'QHD 165Hz curved, 1ms response.',price:'€199,00',old:'€299,00',badge:'−33%',asin:'B08F9XB3LW',stars:'★★★★☆'},
+  {id:13, cat:'gaming',icon:'🖱️',title:'Logitech G502 HERO Mouse',desc:'25K DPI, 11 buttons, RGB.',price:'€39,99',old:'€69,99',badge:'−43%',asin:'B07GBZ4Q68',stars:'★★★★★'},
+  {id:14, cat:'gaming',icon:'🎙️',title:'HyperX Cloud Alpha',desc:'Dual chamber drivers, detachable mic.',price:'€59,99',old:'€99,99',badge:'−40%',asin:'B074NBSF9N',stars:'★★★★★'},
+  {id:71, cat:'gaming',icon:'🃏',title:'Nintendo Switch OLED',desc:'7" OLED screen, 64GB storage.',price:'€309,99',old:'€349,99',badge:'−11%',asin:'B098RL6SBB',stars:'★★★★★',pro:true},
+  {id:72, cat:'gaming',icon:'⌨️',title:'Corsair K70 RGB Pro',desc:'Cherry MX, aluminium frame, macros.',price:'€89,99',old:'€139,99',badge:'−36%',asin:'B09MVKBYPT',stars:'★★★★☆'},
+  {id:73, cat:'gaming',icon:'🎯',title:'Razer DeathAdder V3',desc:'Ultra-light 63g, 30K DPI sensor.',price:'€49,99',old:'€79,99',badge:'−37%',asin:'B0B7BHVJJ8',stars:'★★★★★'},
+  {id:74, cat:'gaming',icon:'🕹️',title:'Xbox Wireless Controller',desc:'Textured grip, Bluetooth, PC ready.',price:'€49,99',old:'€64,99',badge:'−23%',asin:'B0BRDKDFGX',stars:'★★★★☆'},
+  {id:75, cat:'gaming',icon:'🎧',title:'Astro A40 TR Headset',desc:'Pro gaming headset, swappable mic.',price:'€79,99',old:'€149,99',badge:'−46%',asin:'B07H3SLKPF',stars:'★★★★☆'},
+  {id:76, cat:'gaming',icon:'💺',title:'noblechairs HERO Chair',desc:'Ergonomic gaming chair, lumbar support.',price:'€329,00',old:'€449,00',badge:'−26%',asin:'B08P18Y7C9',stars:'★★★★★',pro:true},
+  {id:77, cat:'gaming',icon:'🎮',title:'Xbox Series X Console',desc:'4K gaming, 1TB SSD, Game Pass ready.',price:'€449,99',old:'€499,99',badge:'−10%',asin:'B08H93ZRK9',stars:'★★★★★',pro:true},
+  {id:78, cat:'gaming',icon:'🖥️',title:'ASUS ROG Swift 32" 4K',desc:'4K 144Hz, HDMI 2.1, G-Sync Ultimate.',price:'€699,00',old:'€999,00',badge:'−30%',asin:'B09NG2JWJ4',stars:'★★★★★'},
+  {id:79, cat:'gaming',icon:'🔋',title:'Anker PowerCore 20000 mAh',desc:'Charge phone 5x, dual USB-A + C.',price:'€34,99',old:'€49,99',badge:'−30%',asin:'B01JIWQPMW',stars:'★★★★★'},
+  {id:80, cat:'gaming',icon:'📀',title:'The Last of Us Part I – PC',desc:'Award-winning story, stunning visuals.',price:'€29,99',old:'€59,99',badge:'−50%',asin:'B0BWWQNGF9',stars:'★★★★☆'},
+  {id:85, cat:'gaming',icon:'🎵',title:'Elgato Stream Deck MK.2',desc:'15 LCD keys, 1-tap streaming control.',price:'€119,99',old:'€159,99',badge:'−25%',asin:'B09738CV2G',stars:'★★★★★'},
+
+  // ===== HOME (15) =====
+  {id:15, cat:'home',icon:'☕',title:'De\'Longhi Magnifica Evo',desc:'Bean-to-cup, 3 cup sizes, auto milk.',price:'€429,00',old:'€599,00',badge:'−28%',asin:'B003YLJPHS',stars:'★★★★★',pro:true},
+  {id:16, cat:'home',icon:'🧹',title:'Dyson V12 Detect Slim',desc:'Laser dust detection, HEPA, 40min.',price:'€449,00',old:'€599,99',badge:'−25%',asin:'B08TT2L3FD',stars:'★★★★☆'},
+  {id:17, cat:'home',icon:'💡',title:'Philips Hue Starter Kit',desc:'3 smart bulbs + Bridge, 16M colours.',price:'€99,99',old:'€149,99',badge:'−33%',asin:'B016151IRQ',stars:'★★★★★'},
+  {id:18, cat:'home',icon:'🌡️',title:'Nest Learning Thermostat',desc:'Smart thermostat, auto schedule.',price:'€199,00',old:'€249,00',badge:'−20%',asin:'B0131RG6VK',stars:'★★★★☆'},
+  {id:81, cat:'home',icon:'🍳',title:'Instant Pot Duo 7-in-1',desc:'Pressure + slow + rice cooker, 5.7L.',price:'€79,99',old:'€119,99',badge:'−33%',asin:'B07BHXW8DC',stars:'★★★★★'},
+  {id:82, cat:'home',icon:'🌀',title:'Braun Series 9 Pro Shaver',desc:'5 blades, AutoSense, 60min cordless.',price:'€149,99',old:'€249,99',badge:'−40%',asin:'B09LGVSRG5',stars:'★★★★★',pro:true},
+  {id:83, cat:'home',icon:'🧺',title:'Bosch Serie 6 Washing Machine',desc:'9kg, 1400rpm, EcoSilence, A rating.',price:'€549,00',old:'€799,00',badge:'−31%',asin:'B09NX8Z8Y1',stars:'★★★★☆'},
+  {id:84, cat:'home',icon:'🪴',title:'Meross Smart Plug 4-Pack',desc:'WiFi, energy monitor, Alexa & Google.',price:'€27,99',old:'€44,99',badge:'−37%',asin:'B08F5N3S9J',stars:'★★★★☆'},
+  {id:86, cat:'home',icon:'🍽️',title:'Bosch Series 6 Dishwasher',desc:'13 place settings, A rating, 44dB quiet.',price:'€599,00',old:'€849,00',badge:'−29%',asin:'B09V4KCXZB',stars:'★★★★★'},
+  {id:87, cat:'home',icon:'🌬️',title:'Dyson Pure Hot+Cool Fan',desc:'Air purifier + heater + fan in one.',price:'€399,00',old:'€549,00',badge:'−27%',asin:'B08WCG8JVK',stars:'★★★★☆',pro:true},
+  {id:88, cat:'home',icon:'🪟',title:'Philips 3200 Series Air Fryer',desc:'7L XXL, Rapid Air, touchscreen.',price:'€89,99',old:'€139,99',badge:'−35%',asin:'B09V1CPCFM',stars:'★★★★★'},
+  {id:89, cat:'home',icon:'🛏️',title:'Emma Premium Mattress 160x200',desc:'Memory foam, 10yr warranty, free return.',price:'€499,00',old:'€799,00',badge:'−37%',asin:'B07MFY35DD',stars:'★★★★★',pro:true},
+  {id:90, cat:'home',icon:'🔒',title:'Yale Smart Door Lock',desc:'Keypad + app + key, auto-lock.',price:'€149,00',old:'€199,00',badge:'−25%',asin:'B07WQWYHSB',stars:'★★★★☆'},
+  {id:95, cat:'home',icon:'🌱',title:'Click & Grow Smart Garden 9',desc:'Self-watering, LED grow light, 9 pods.',price:'€129,95',old:'€179,95',badge:'−27%',asin:'B07BPPH6JB',stars:'★★★★★'},
+  {id:96, cat:'home',icon:'📦',title:'iRobot Roomba i3+',desc:'Self-empties, smart mapping, Alexa.',price:'€349,00',old:'€499,00',badge:'−30%',asin:'B094NYHNXN',stars:'★★★★☆'},
+
+  // ===== FASHION (15) =====
+  {id:19, cat:'fashion',icon:'👟',title:'Nike Air Max 270',desc:'Max air cushioning, many colours.',price:'€89,95',old:'€139,95',badge:'−35%',asin:'B07D3MN18M',stars:'★★★★☆'},
+  {id:20, cat:'fashion',icon:'🕶️',title:'Ray-Ban Wayfarer Classic',desc:'UV400 protection, iconic frame.',price:'€99,00',old:'€149,00',badge:'−33%',asin:'B001O8SRKY',stars:'★★★★★'},
+  {id:21, cat:'fashion',icon:'🎒',title:'Osprey Farpoint 40L',desc:'Travel backpack, carry-on size.',price:'€129,00',old:'€169,00',badge:'−23%',asin:'B0114JGSLQ',stars:'★★★★★'},
+  {id:91, cat:'fashion',icon:'👕',title:'Levi\'s 501 Original Jeans',desc:'Straight fit, button fly, 100% cotton.',price:'€49,95',old:'€79,95',badge:'−37%',asin:'B000IUQEVK',stars:'★★★★☆'},
+  {id:92, cat:'fashion',icon:'🧤',title:'The North Face Etip Gloves',desc:'Touchscreen-compatible, recycled.',price:'€34,99',old:'€54,99',badge:'−36%',asin:'B07JNHGMYY',stars:'★★★★☆'},
+  {id:93, cat:'fashion',icon:'🧢',title:'New Era 59FIFTY Cap',desc:'Flat brim, embroidered logo, wool.',price:'€29,99',old:'€44,99',badge:'−33%',asin:'B00GJ0JN5E',stars:'★★★★★'},
+  {id:94, cat:'fashion',icon:'👠',title:'Birkenstock Arizona Sandals',desc:'Two-strap, cork footbed, classic.',price:'€54,95',old:'€79,95',badge:'−31%',asin:'B000W4YB8M',stars:'★★★★★'},
+  {id:97, cat:'fashion',icon:'🧥',title:'Canada Goose Expedition Parka',desc:'Arctic-rated, coyote fur, waterproof.',price:'€749,00',old:'€1.095,00',badge:'−31%',asin:'B086PLCSCB',stars:'★★★★★',pro:true},
+  {id:98, cat:'fashion',icon:'👔',title:'Hugo Boss Classic Watch',desc:'Stainless steel, sapphire crystal.',price:'€179,00',old:'€269,00',badge:'−33%',asin:'B07D3T2C9R',stars:'★★★★★'},
+  {id:99, cat:'fashion',icon:'💼',title:'Samsonite Spinner 75cm',desc:'4-wheel hardcase, TSA lock, lightweight.',price:'€159,00',old:'€249,00',badge:'−36%',asin:'B01N5OEOQZ',stars:'★★★★☆'},
+  {id:100,cat:'fashion',icon:'🩴',title:'Adidas Adilette Slides',desc:'Cloud foam footbed, quick-dry strap.',price:'€19,95',old:'€34,95',badge:'−43%',asin:'B09FHB5P5D',stars:'★★★★★'},
+  {id:105,cat:'fashion',icon:'🧣',title:'Acne Studios Wool Scarf',desc:'100% wool, oversized, classic check.',price:'€109,00',old:'€180,00',badge:'−39%',asin:'B07XJKD8PG',stars:'★★★★☆'},
+  {id:106,cat:'fashion',icon:'👜',title:'Michael Kors Jet Set Tote',desc:'Signature MK canvas, zip closure.',price:'€99,00',old:'€159,00',badge:'−37%',asin:'B07K2KFPDT',stars:'★★★★☆'},
+  {id:107,cat:'fashion',icon:'🩲',title:'Calvin Klein 3-Pack Boxers',desc:'Cotton stretch, logo waistband.',price:'€34,95',old:'€49,95',badge:'−30%',asin:'B001N8YSIY',stars:'★★★★★'},
+  {id:108,cat:'fashion',icon:'🥿',title:'UGG Classic Short Boots',desc:'Sheepskin lining, suede upper.',price:'€159,95',old:'€219,95',badge:'−27%',asin:'B0002TDOOA',stars:'★★★★★'},
+
+  // ===== BEAUTY (15) =====
+  {id:22, cat:'beauty',icon:'🪥',title:'Oral-B iO Series 7',desc:'AI pressure sensor, 5 modes, 2-week battery.',price:'€99,99',old:'€179,99',badge:'−44%',asin:'B08BRLTS9N',stars:'★★★★★',pro:true},
+  {id:23, cat:'beauty',icon:'💆',title:'FOREO LUNA 3',desc:'Silicone sonic cleanser, waterproof.',price:'€99,00',old:'€149,00',badge:'−33%',asin:'B07RFLXRGJ',stars:'★★★★☆'},
+  {id:24, cat:'beauty',icon:'✨',title:'Dyson Airwrap Multi-Styler',desc:'Style without heat. 6 attachments.',price:'€399,00',old:'€499,00',badge:'DEAL',asin:'B08FXRGLJW',stars:'★★★★★',pro:true},
+  {id:101,cat:'beauty',icon:'🌿',title:'The Ordinary Hyaluronic Acid',desc:'2% + B5, deep hydration, all skin types.',price:'€8,90',old:'€13,90',badge:'−36%',asin:'B07MVNJQX1',stars:'★★★★★'},
+  {id:102,cat:'beauty',icon:'🧴',title:'CeraVe Moisturising Cream',desc:'252ml, ceramides, 48h hydration.',price:'€12,99',old:'€19,99',badge:'−35%',asin:'B00TTD9BRC',stars:'★★★★★'},
+  {id:103,cat:'beauty',icon:'💄',title:'Maybelline Fit Me Foundation',desc:'30ml, natural finish, 40 shades.',price:'€9,99',old:'€14,99',badge:'−33%',asin:'B00H8H9X1E',stars:'★★★★☆'},
+  {id:104,cat:'beauty',icon:'🪒',title:'Gillette Fusion5 ProGlide',desc:'5-blade + 8 refills, Flexball handle.',price:'€24,99',old:'€39,99',badge:'−37%',asin:'B004AHXV2O',stars:'★★★★☆'},
+  {id:115,cat:'beauty',icon:'💅',title:'OPI Nail Polish Set 12x',desc:'Long-lasting, chip-resistant, salon finish.',price:'€34,99',old:'€59,99',badge:'−41%',asin:'B00164XCDO',stars:'★★★★★'},
+  {id:116,cat:'beauty',icon:'🌸',title:'Charlotte Tilbury Magic Cream',desc:'50ml, hyaluronic acid, collagen boost.',price:'€49,00',old:'€75,00',badge:'−34%',asin:'B07VHWCXGR',stars:'★★★★★',pro:true},
+  {id:117,cat:'beauty',icon:'🫧',title:'La Roche-Posay Effaclar Duo',desc:'Anti-blemish, pore minimiser, 40ml.',price:'€14,99',old:'€22,99',badge:'−34%',asin:'B01MFEO8Q7',stars:'★★★★★'},
+  {id:118,cat:'beauty',icon:'🪞',title:'Remington Proluxe Hair Dryer',desc:'2400W, ionic, 3 heat + 2 speed settings.',price:'€39,99',old:'€69,99',badge:'−43%',asin:'B07CKXJKSS',stars:'★★★★☆'},
+  {id:119,cat:'beauty',icon:'🛁',title:'REN Clean Skincare Gift Set',desc:'4 full-size bestsellers, Atlantic Kelp.',price:'€55,00',old:'€85,00',badge:'−35%',asin:'B0757QYXVC',stars:'★★★★★'},
+  {id:120,cat:'beauty',icon:'🌊',title:'Garnier Micellar Water 700ml',desc:'All-in-1 cleanser, no rinsing needed.',price:'€6,99',old:'€11,99',badge:'−41%',asin:'B01LWVMR90',stars:'★★★★★'},
+  {id:121,cat:'beauty',icon:'💋',title:'MAC Lipstick Ruby Woo',desc:'Classic red, matte finish, long-wear.',price:'€19,50',old:'€28,00',badge:'−30%',asin:'B008CV6MBC',stars:'★★★★★'},
+  {id:122,cat:'beauty',icon:'🧖',title:'Clinique Moisture Surge 125ml',desc:'72hr auto-replenishing hydration gel.',price:'€34,99',old:'€54,99',badge:'−36%',asin:'B000URZHBA',stars:'★★★★★'},
+
+  // ===== BOOKS (15) =====
+  {id:25, cat:'books',icon:'📘',title:'Atomic Habits – James Clear',desc:'#1 NYT bestseller, build better habits.',price:'€14,99',old:'€22,00',badge:'TIPP',asin:'B01N5AX61W',stars:'★★★★★'},
+  {id:26, cat:'books',icon:'📱',title:'Kindle Paperwhite (2023)',desc:'6.8" glare-free, waterproof, 12 weeks.',price:'€149,99',old:'€189,99',badge:'−21%',asin:'B09TMF6742',stars:'★★★★★',pro:true},
+  {id:27, cat:'books',icon:'🎧',title:'Audible 3-Month Gift Card',desc:'Unlimited audiobooks & podcasts.',price:'€44,97',old:'€59,97',badge:'−25%',asin:'B00NB86OYE',stars:'★★★★☆'},
+  {id:111,cat:'books',icon:'📗',title:'The Psychology of Money',desc:'Morgan Housel. Wealth, greed & happiness.',price:'€12,99',old:'€18,00',badge:'TIPP',asin:'B08D9WJ9G8',stars:'★★★★★'},
+  {id:112,cat:'books',icon:'📙',title:'Deep Work – Cal Newport',desc:'Focused success in a distracted world.',price:'€13,99',old:'€19,99',badge:'−30%',asin:'B00X47ZVXM',stars:'★★★★★'},
+  {id:113,cat:'books',icon:'📕',title:'The 4-Hour Work Week',desc:'Ferriss: escape 9-5, live anywhere.',price:'€11,99',old:'€17,99',badge:'−33%',asin:'B002WE46UW',stars:'★★★★☆'},
+  {id:114,cat:'books',icon:'📓',title:'Thinking, Fast and Slow',desc:'Kahneman: how the mind makes decisions.',price:'€13,99',old:'€20,00',badge:'−30%',asin:'B005MJFA2W',stars:'★★★★★'},
+  {id:123,cat:'books',icon:'📒',title:'Rich Dad Poor Dad',desc:'Kiyosaki: what the rich teach their kids.',price:'€10,99',old:'€16,99',badge:'−35%',asin:'B07C7M8SX9',stars:'★★★★☆'},
+  {id:124,cat:'books',icon:'📔',title:'Sapiens – Yuval Harari',desc:'A brief history of humankind.',price:'€11,99',old:'€17,99',badge:'−33%',asin:'B00ICN066A',stars:'★★★★★'},
+  {id:125,cat:'books',icon:'📚',title:'The Lean Startup',desc:'Eric Ries: build, measure, learn.',price:'€12,99',old:'€18,99',badge:'−31%',asin:'B004J4XGN6',stars:'★★★★☆'},
+  {id:126,cat:'books',icon:'📖',title:'Zero to One – Peter Thiel',desc:'Notes on startups and the future.',price:'€11,99',old:'€16,99',badge:'−29%',asin:'B00J6YBOFQ',stars:'★★★★★'},
+  {id:127,cat:'books',icon:'🔖',title:'The Subtle Art of Not Giving',desc:'Mark Manson. A counterintuitive approach.',price:'€10,99',old:'€15,99',badge:'−31%',asin:'B019MMUA8S',stars:'★★★★☆'},
+  {id:128,cat:'books',icon:'📜',title:'Good to Great – Jim Collins',desc:'Why some companies make the leap.',price:'€13,99',old:'€20,00',badge:'−30%',asin:'B0058DRUV6',stars:'★★★★★'},
+  {id:129,cat:'books',icon:'🗒️',title:'Educated – Tara Westover',desc:'A memoir. Courage to choose your own path.',price:'€11,99',old:'€17,99',badge:'−33%',asin:'B072BLVM83',stars:'★★★★★'},
+  {id:130,cat:'books',icon:'📋',title:'Elon Musk – Walter Isaacson',desc:'The definitive biography of Elon Musk.',price:'€16,99',old:'€26,00',badge:'−34%',asin:'B0BW9GNCM3',stars:'★★★★★'},
+];
+
+// STATE
+let user = null, wishlist = [], currentPayAsin = null, currentCat = 'all';
+
+// RENDER
+function renderProducts(products) {
+  const grid = document.getElementById('productGrid');
+  if (!products.length) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--muted)"><div style="font-size:48px;margin-bottom:12px">\u{1F50D}</div><div>No deals found. Try a different search!</div></div>';
+    return;
+  }
+  window._pmap = {};
+  products.forEach(p => { window._pmap[p.id] = p; });
+
+  grid.innerHTML = products.map(p => {
+    const inWish = wishlist.some(w => w.id === p.id);
+    const isAmzCard = p.isAmazonSearch;
+    const buyHref = isAmzCard ? p.link : amzLink(p.asin);
+    const badge = p.badge ? '<div class="pcard-badge">' + p.badge + '</div>' : '';
+    const proBadge = p.pro ? '<div class="pcard-badge pro-b">\u2728 PRO</div>' : '';
+    const wishBtn = !isAmzCard ? '<button class="pcard-wish' + (inWish ? ' saved' : '') + '" id="wb' + p.id + '" data-wid="' + p.id + '" onclick="event.stopPropagation();toggleWish(' + p.id + ')">' + (inWish ? '\u2764\uFE0F' : '\U0001F90D') + '</button>' : '';
+    const stars = p.stars ? '<div class="pcard-stars">' + p.stars + '</div>' : '';
+    const oldPrice = p.old ? '<span class="pcard-old">' + p.old + '</span>' : '';
+    const btnStyle = isAmzCard ? 'background:#ff9900;color:#1a1a1a' : '';
+    const btnText = isAmzCard ? 'Search \u2192' : 'Buy \u2192';
+    return '<div class="pcard' + (isAmzCard ? ' amazon-card' : '') + '" data-pid="' + p.id + '" data-amz="' + (isAmzCard ? 1 : 0) + '" data-link="' + (isAmzCard ? p.link : '') + '">'
+      + badge + proBadge + wishBtn
+      + '<div class="pcard-img"><span>' + p.icon + '</span></div>'
+      + '<div class="pcard-body">'
+      + '<div class="pcard-cat">' + (p.catLabel || catLabel(p.cat)) + '</div>'
+      + stars
+      + '<div class="pcard-title">' + p.title + '</div>'
+      + '<div class="pcard-footer">'
+      + '<div><span class="pcard-price">' + p.price + '</span>' + oldPrice + '</div>'
+      + '<a href="' + buyHref + '" target="_blank" rel="noopener" class="buy-btn" style="' + btnStyle + '" onclick="event.stopPropagation();showToast(\'Opening Amazon...\',\'\U0001F6D2\')">' + btnText + '</a>'
+      + '</div></div></div>';
+  }).join('');
+
+  grid.querySelectorAll('.pcard').forEach(card => {
+    card.addEventListener('click', function(e) {
+      if (e.target.closest('.buy-btn') || e.target.closest('.pcard-wish')) return;
+      const p = window._pmap[this.dataset.pid];
+      if (!p) return;
+      if (this.dataset.amz === '1') { window.open(this.dataset.link, '_blank'); return; }
+      openPayModal(p.icon, p.title, p.price, p.asin);
+    });
+  });
+}
+
+function catLabel(c) {
+  const m={sport:'Sport',tech:'Electronics',gaming:'Gaming',home:'Home',fashion:'Fashion',beauty:'Beauty',books:'Books'};
+  return m[c]||c;
+}
+
+function filterCat(cat, btn) {
+  currentCat = cat;
+  document.getElementById('searchInput').value = '';
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts(cat === 'all' ? ALL_PRODUCTS : ALL_PRODUCTS.filter(p => p.cat === cat));
+}
+
+function doSearch() {
+  const q = document.getElementById('searchInput').value.trim();
+  if (!q) { renderProducts(ALL_PRODUCTS); return; }
+  const ql = q.toLowerCase();
+  const local = ALL_PRODUCTS.filter(p => p.title.toLowerCase().includes(ql) || p.desc.toLowerCase().includes(ql) || catLabel(p.cat).toLowerCase().includes(ql));
+  const amzCard = [{
+    id:9999, isAmazonSearch:true, icon:'📦',
+    title:`Search "${q}" on Amazon.de`,
+    desc:'Browse all Amazon results for this search',
+    price:'All results', old:null, badge:'🔍 AMAZON',
+    link: amzSearch(q), catLabel:'Amazon Direct', stars:null
+  }];
+  renderProducts([...amzCard, ...local]);
+  showToast(`Showing results for "${q}"`, '🔍');
+}
+
+function refreshDeals() {
+  const shuffled = [...ALL_PRODUCTS].sort(() => Math.random() - 0.5);
+  renderProducts(currentCat === 'all' ? shuffled : shuffled.filter(p => p.cat === currentCat));
+  showToast('Deals refreshed! ↻', '✓');
+}
+
+// WISHLIST
+function toggleWish(id) {
+  if (!user) { showAuth('login'); showToast('Please sign in to save deals','🔒'); return; }
+  const p = ALL_PRODUCTS.find(x => x.id === id);
+  const idx = wishlist.findIndex(w => w.id === id);
+  const btn = document.getElementById('wb'+id);
+  if (idx > -1) {
+    wishlist.splice(idx,1);
+    if(btn){btn.textContent='🤍';btn.classList.remove('saved');}
+    showToast('Removed from saved','🗑️');
+  } else {
+    wishlist.push(p);
+    if(btn){btn.textContent='❤️';btn.classList.add('saved');}
+    showToast(`❤️ ${p.title} saved!`,'');
+  }
+  document.getElementById('statSaved').textContent = wishlist.length;
+  renderWishlist();
+}
+
+function renderWishlist() {
+  const c = document.getElementById('wishlistContainer');
+  if (!wishlist.length) {
+    c.innerHTML = `<div style="text-align:center;padding:36px 0;color:var(--muted)"><div style="font-size:40px;margin-bottom:10px">💔</div><div>No saved deals yet.<br>Click ❤️ on any product!</div></div>`;
+    return;
+  }
+  c.innerHTML = wishlist.map(p => `
+    <div class="wish-item">
+      <div class="wish-icon">${p.icon}</div>
+      <div class="wish-info"><div class="wish-title">${p.title}</div><div class="wish-price">${p.price} <span style="color:var(--muted);text-decoration:line-through;font-size:11px">${p.old}</span></div></div>
+      <a href="${amzLink(p.asin)}" target="_blank" class="buy-btn" style="font-size:11px;padding:6px 12px;margin-right:8px" onclick="showToast('Opening Amazon...','🛒')">Buy →</a>
+      <button class="wish-rm" onclick="toggleWish(${p.id})">×</button>
+    </div>`).join('');
+}
+
+// AUTH
+function showAuth(mode) {
+  document.getElementById('loginCard').style.display = mode==='login'?'block':'none';
+  document.getElementById('registerCard').style.display = mode==='register'?'block':'none';
+  document.getElementById('authOverlay').classList.add('open');
+}
+function switchAuth(mode) { showAuth(mode); }
+
+function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pw = document.getElementById('loginPw').value;
+  if (!email||!pw) { showErr('loginErr','Please fill in all fields.'); return; }
+  if (!email.includes('@')) { showErr('loginErr','Invalid email address.'); return; }
+  loginUser({name:email.split('@')[0].replace(/[._]/g,' ').replace(/\b\w/g,c=>c.toUpperCase()),email,avatar:null});
+}
+
+function doRegister() {
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const pw = document.getElementById('regPw').value;
+  if (!name||!email||!pw) { showErr('regErr','Please fill in all fields.'); return; }
+  if (!email.includes('@')) { showErr('regErr','Invalid email address.'); return; }
+  if (pw.length<6) { showErr('regErr','Password must be at least 6 characters.'); return; }
+  loginUser({name,email,avatar:null});
+}
+
+function quickDemo() {
+  loginUser({name:'Demo User',email:'demo@newdeals.com',avatar:null});
+}
+
+function loginUser(u) {
+  user = u; u.days = 1;
+  closeOverlay('authOverlay');
+  updateNav(); fillProfile();
+  showToast(`👋 Welcome, ${u.name.split(' ')[0]}!`,'✓');
+}
+
+function doLogout() {
+  user = null; wishlist = [];
+  closeOverlay('profileOverlay');
+  document.getElementById('statSaved').textContent = 0;
+  renderProducts(ALL_PRODUCTS);
+  document.getElementById('navRight').innerHTML = `
+    <button class="btn btn-outline" onclick="showAuth('login')">Sign In</button>
+    <button class="btn btn-red" onclick="showAuth('register')">Sign Up Free</button>`;
+  showToast('Signed out','👋');
+}
+
+function updateNav() {
+  const av = user.avatar
+    ? `<div class="nav-avatar-wrap" onclick="openProfile()"><img src="${user.avatar}"></div>`
+    : `<div class="nav-avatar-wrap" onclick="openProfile()">${user.name.charAt(0).toUpperCase()}</div>`;
+  document.getElementById('navRight').innerHTML = `<button class="btn btn-outline" onclick="openProfile()">My Profile</button>${av}`;
+}
+
+// PROFILE
+function openProfile() {
+  if (!user) { showAuth('login'); return; }
+  document.getElementById('profileOverlay').classList.add('open');
+  fillProfile();
+}
+
+function fillProfile() {
+  if (!user) return;
+  document.getElementById('profName').textContent = user.name;
+  document.getElementById('profEmail').textContent = user.email;
+  document.getElementById('editName').value = user.name||'';
+  document.getElementById('editUsername').value = user.username||('@'+user.name.replace(/\s/g,'').toLowerCase());
+  document.getElementById('editEmail').value = user.email||'';
+  document.getElementById('editBio').value = user.bio||'';
+  document.getElementById('statDays').textContent = user.days||1;
+  updateAvatarUI();
+}
+
+function uploadAvatar(input) {
+  const file = input.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => { user.avatar = e.target.result; updateAvatarUI(); updateNav(); showToast('Profile photo updated','📷'); };
+  reader.readAsDataURL(file);
+}
+
+function updateAvatarUI() {
+  const av = document.getElementById('profAvatar');
+  const ep = document.getElementById('editAvatarPrev');
+  const init = user ? user.name.charAt(0).toUpperCase() : '?';
+  if (user && user.avatar) {
+    av.innerHTML = `<img src="${user.avatar}">`;
+    ep.innerHTML = `<img src="${user.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
+  } else { av.textContent = init; ep.textContent = init; }
+}
+
+function saveProfile() {
+  if (!user) return;
+  user.name = document.getElementById('editName').value.trim()||user.name;
+  user.username = document.getElementById('editUsername').value.trim();
+  user.email = document.getElementById('editEmail').value.trim()||user.email;
+  user.bio = document.getElementById('editBio').value.trim();
+  fillProfile(); updateNav();
+  showToast('Profile saved ✓','✅');
+}
+
+function switchProfTab(name, btn) {
+  document.querySelectorAll('.prof-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.prof-section').forEach(s=>s.classList.remove('active'));
+  btn.classList.add('active');
+  const sec = document.getElementById('tab-'+name);
+  if(sec){sec.classList.add('active');if(name==='wishlist')renderWishlist();}
+}
+
+// PAYMENT
+function openPayModal(icon,title,price,asin) {
+  currentPayAsin = asin||null;
+  document.getElementById('payIcon').textContent = icon;
+  document.getElementById('payTitle').textContent = title;
+  document.getElementById('payDesc').textContent = `${price} · Choose payment method — you'll checkout securely on Amazon.`;
+  document.getElementById('payOverlay').classList.add('open');
+}
+
+function doPay(method) {
+  closeOverlay('payOverlay');
+  if (currentPayAsin && currentPayAsin !== 'null') window.open(amzLink(currentPayAsin), '_blank');
+  showToast(`Redirecting to Amazon via ${method} ⚡`,'✓');
+}
+
+// UTILS
+function closeOverlay(id) { document.getElementById(id).classList.remove('open'); }
+function showErr(id,msg) { const el=document.getElementById(id); el.textContent=msg; el.classList.add('show'); }
+function checkStrength(pw) {
+  const f=document.getElementById('strengthFill'); f.className='strength-fill';
+  if(!pw){f.style.width='0';return;}
+  if(pw.length<6) f.classList.add('s-weak');
+  else if(pw.length<10) f.classList.add('s-med');
+  else f.classList.add('s-strong');
+}
+
+let _tt;
+function showToast(msg,icon='✓') {
+  const t=document.getElementById('toast');
+  document.getElementById('toastIcon').textContent=icon;
+  document.getElementById('toastMsg').textContent=msg;
+  t.classList.add('show'); clearTimeout(_tt);
+  _tt=setTimeout(()=>t.classList.remove('show'),3200);
+}
+
+['authOverlay','payOverlay','profileOverlay'].forEach(id=>{
+  document.getElementById(id).addEventListener('click',function(e){if(e.target===this)closeOverlay(id);});
+});
+
+// INIT
+renderProducts(ALL_PRODUCTS);
+</script>
+</body>
+</html>
